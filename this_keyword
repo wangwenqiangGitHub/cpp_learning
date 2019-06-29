@@ -1,0 +1,97 @@
+//学习C++，实际上C++是从C语言的基础上发展而来的，根据浙大-翁恺老师的思想，进行学习从key_word开始入手
+//c++的编译器实际上是将C++程序翻译成C语言程序，然后由C语言编译器进行编译。
+/*
+C没有类的概念，只有结构，函数全是全局函数，没有成员函数。翻译时，将class翻译翻译成struct/对象翻译成结构变量是显而易见的，
+但是对类的成员函数应该如何翻译呢？对于myCar.Modify();这样通过一个对像调用成员函数的语句，又该如何翻译？
+
+C语言只有全局函数，因此成员函数只能被翻译成全局函数；myCar.Modify();这样的语句也只能被翻译成普通的调用全局函数的语句。
+那如何让翻译后Modify全局函数还作用在myCar这个结构变量上呢？
+例子：引自：http://c.biancheng.net/view/170.html
+
+*/.
+class CCar
+{
+public:
+    int price;
+    void SetPrice(int p);
+}
+
+void CCar::SetPrice(int p)
+{
+  price= p;
+  
+}
+
+int main()
+{
+    CCar car;
+    car.SetPrice(20000);
+    return 0;
+}
+
+//比较精彩的是翻译后的C语言程序。
+struct CCar
+{
+  int price;
+}
+
+void SetPrice(struct CCar* this,int p)
+{
+  this->price =p;
+}
+int main()
+{
+  struct CCar car;
+  setPrice(&car,2000);
+  return 0;
+  
+}
+/*/解释是：类被翻译成结构体，对象被翻译成结构变量，成员函数被翻译成全局函数。但是
+C程序的全局函数SetPrice比C++的成员函数SelPrice多了一个参数，就是struct CCar *this。
+car.SetPrice(20000);被翻译成SetPrice(&car,20000);后者在执行时，this形参指向的正式car这个变量，因而达到了SetPrice
+函数在car变量上的效果。
+*/
+/*
+C编译器实际就是非静态成员函数实际上的参数个数局势比用C++写的类的成员函数多一个参数。
+多出来的参数就是所谓的this指针。这个this指针成了成员函数的作用对象。在成员函数执行的过程中，
+就是通过“this指针”才找到对象所在的地址的，因而也就能找到对象的所有非静态成员变量的地址。
+*/
+
+#inlcude<iostream>
+using namespcae std;
+class A
+{
+  int i;
+public:
+  void Hello(){cout<<"hello"<<endl;} 
+};
+
+int main()
+{
+  A* p=NULL;
+  P->Hello();
+}
+//上面程序输出的就是hello
+上面的程序中,P明明是一个空指针，为何还呢个将正确的调用hello函数呢，因此，在参考上面
+C++到C程序的翻译，p->Hello()实际是Hello（P），cout中没有用到this指针，因此可以输出结果，
+如果hello中有对成员变量的访问，那就会出错
+
+C++规定，在非静态成员函数内部可以直接使用thi关键字。this就是代表指向该函数所作用的对象的指针。
+
+#include<iostream>
+using namespace std;
+class Complex{
+public:
+    double real,imag;
+    Complex(double r,double i):real(r),imag(i){}
+    Complex AddOne()
+    {
+      this->real++;
+      return *this;
+      
+    }
+};
+
+ //this->real++;中的this指的是Complex*,因为this指针所指向的函数就是所所作用的对象
+ // return *this;就是 *this实际上就是C!。，表明C1和C2的值相同。
+
