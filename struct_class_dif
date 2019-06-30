@@ -1,0 +1,14 @@
+C++中的struct不在仅仅代表数据结构
+C++中的srtuct与class一样可以继承、多态、对象
+C++中的struct与class不同之处是，默认的访问权限是，struct是public，class是private
+
+写代码时候，用class来定义类，而使用struct来定义结构体，这样语义更加确定。
+
+C语言中有6中基本的数据类型：short 、int、long、float、double、char根据posix标准，一般整形对应的*_t类型为
+1字节  uint8_t  unsigned char
+2字节  uint16_t unsigned short int 
+4字节  uint32_t unsigned int
+8字节  uint64_t unsigned long int
+
+类也相当于一种类型
+
