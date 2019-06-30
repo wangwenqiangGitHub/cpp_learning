@@ -1,0 +1,47 @@
+string是C++中常用的一个类
+
+使用string 就要包含string类，即#include<string>
+
+定义string类的变量的方法：
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main()
+{
+  string s1;
+  string s2="c plus plus"s
+  string s3 = s2;
+  string s4(5,'s');
+  return 0;
+}
+
+变量s1只是定义，没有初始化，编译器会将默认值赋值给s1，默认值是"",也即空字符串。
+变量s2在定义的同时被定义为"C plus plus"。与c风格的字符串不同，string的结尾没有结束标志'\0'；
+变量s3在定义的时候直接用s2进行初始化，因此s3的内容也是"c plus plus"。
+变量s4被初始化由5个'S'字符组成的字符串，也就是"ssssss"
+
+string变量可以通过赋值操作符=进行赋值。string 变量也可以通过C风格的字符串进行赋值，例如，s2是用一个字符串常量进行初始化的，而s3则是s2变量进行初始化的。
+
+与C风格的字符串不同，当我们需要知道字符串长度时，可以调用string类提供的length()函数。
+string s="http://c.biancheng.net";
+int len = s.length;
+cout<<len<<endl;
+
+输出结果为22.由于string的末尾没有'\0'字符，所以length()返回的字符串的长度是真是长度，而不是长度+1.
+
+转换为c风格的字符串
+虽然C++提供了string类来替换C语言中的字符串，但是实际变成过程中，有时候必须使用C风格的字符串（例如打开文件的路径）
+为此，string类为我们提供了一个转换函数c_str()，能够将string字符串转换为C风格的字符串，并返回该字符串的const指针（const char*）.
+
+string path = "D：\\demo.txt";
+FILE *fp=fopen(path.c_str(),"rt");
+为了使用c语言中fopen()函数打开文件，必须将string字符转换为C风格的字符串。
+
+
+
+
+
+
+
+
