@@ -13,4 +13,56 @@ class 派生类名:［继承方式］ 基类名{派生类新增加的成员};
 
 public、protected、private修饰类的成员
 类成员的权限由高依次为public->protected->private；
-其中protect。
+其中protect。protect成员和private成员类似，不能通过对象访问。但是存在继承关系时，protected和Private就不一样了;
+基类中的protected成员可以在派生类中使用，而基类中的private成员不能在派生类中使用。
+
+不同的继承方式会影响基类成员在派生类中的访问权限。
+1）public继承方式
+  基类中所有public成员在派生类中为public属性；
+  基类中所有proteced成员在派生类中为protected属性；
+  基类中所有private成员在派生类中不能使用。
+2）protected继承方式
+   基类中所有的public成员在派生类中为protected属性；
+   基类中所有的protected成员在派生类中为protected属性；
+   基类中的所有private成员在派生类中不能使用
+3）private继承方式
+   基类中的所有public成员在派生类中均为private属性；
+   基类中的所有protected成员在派生类中均为private属性；
+   基类中的所有private成员在派生类中不能使用。
+通过上面的分析可以发现：
+1）基类成员在派生类中的访问权限不得高于继承方式中指定的权限。例如，当继承方式为protect时，那么基类成员在派生类中的访问权限
+最高也为protected,高于protected的会降级为protected，但是低于protected不会升级，再如继承方式public时，那么基类成员在派生类中的访问权限会保持不变
+
+也就是说，继承方式的public、protected private是用来知名基类成员在派生类中的最高访问权限的。
+2）不管继承方式如何，基类中的private成员在派生类中始终不能使用
+3）如果希望基类的成员能够被派生类继承并且毫无障碍的使用，那么这些成员只能声明为public或者protected；只有那些不希望在
+派生类中使用的成员才设置成private.
+
+改变访问权限
+使用using关键字可以改变基类成员在派生类中的访问权限，例如将public改名为private、将protected改为public
+
+
+实例：
+
+#include<iostream>
+using namespace std;
+
+//基类people
+class People{
+public: 
+        void show();
+protected:
+        char *m_name;
+        int m_age;
+};
+
+void People::show()
+{
+      cout<<m_name<<
+}
+
+
+
+
+
+
