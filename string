@@ -38,10 +38,92 @@ string path = "D：\\demo.txt";
 FILE *fp=fopen(path.c_str(),"rt");
 为了使用c语言中fopen()函数打开文件，必须将string字符转换为C风格的字符串。
 
+string 字符串的输入输出
+string类重载了输入输出运算符，可以像对待普通对象那个对待string变量，也就是>>进行输入，用<<进行输出，
+例如：
+#include<iostream>
+#include<string>
+
+using namespace std;
+int main(void)
+{
+  string s;
+  cin>>s;
+  cout<<s<<endl;
+  return 0;
+}
+输入
+123455 9084849
+输出
+123455
+采用空格进行分开其实是遇到空格就会结束输入
+
+string s="1234567890";
+for(int i=0;i<s.length();i++){
+  cout<<s[i]<<" ";
+  
+  }
+  cout<<endl;
+  s[5]='5';
+  cout<<s<<endl;
+  return 0;
+  
+从程序中可以看出是s[5]='5'；就将第6个字符修改为'5'，所以s最后为"1234557890"
+
+字符串的拼接：
+在string类中，可以使用+或者+=运算符来直接拼接字符串，非常方便，不用再需要C语言
+中的strcat()、strcpy()、malloc()等函数来拼接字符串了，也不用担心空间不会会溢出。
 
 
 
 
 
 
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int main(void)
+{
+    string s1 = "first";
+    string s2 = "second";
+    char  *s3 = "third";
+    char s4[]="fourth";
+    char ch='@';
+
+    string s5 = s1+s2;
+    string s6 = s1+s3;
+    string s7 = s1+ s4;
+    string s8=s1+ch;
+    cout<<s5<<endl<<s6<<endl<<s7<<endl<<s8<<endl;
+    return 0;
+}
+
+输出：
+firstsecond
+firstthird
+firstfourth
+first@
+
+string的增删改查
+
+提取字符：
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(){
+    string s1 = "first second third";
+    string s2;
+    s2 = s1.substr(6, 6);
+    cout<< s1 <<endl;
+    cout<< s2 <<endl;
+    return 0;
+}
+
+输出
+first second third
+second
 
