@@ -9,3 +9,26 @@ C++的形参大致可以分为三种，传值，传指针，传引用。
 
 
 C++的形参可以是数组，但是返回值不能是数组
+
+
+传指针实例
+
+void fun(int *x)
+{
+*x += 5; //修改的是指针x指向的内存单元值
+}
+void main(void){
+int y = 0;
+fun(&y);
+cout<<<<\"y = \"<<y<<endl; //y = 5;
+}：
+
+传引用：
+void fun(int &x){
+x += 5; //修改的是x引用的对象值 &x = y;
+}
+void main(void){
+int y = 0;
+fun(y);
+cout<<<<\"y = \"<<y<<endl; //y = 5;
+}
