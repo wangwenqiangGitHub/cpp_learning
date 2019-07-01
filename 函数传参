@@ -32,3 +32,34 @@ int y = 0;
 fun(y);
 cout<<<<\"y = \"<<y<<endl; //y = 5;
 }
+
+  void init_iot_comm(ros::NodeHandle *nh)
+    {
+      m_route_path_sub = nh->subscribe(SUBSCRIBE_MQTT_TOPIC, SUBSCRIBE_QUEUE_BUF_LEN, route_path_callback);
+    }
+    
+  C++中变量是对象的时候用.访问
+  C++中变量是指针的时候用箭头访问
+  例如：
+#inlclude <iostream>
+using namespace std;
+ 
+class A
+{
+    public:
+       int x;
+       int y;  
+};
+ 
+ 
+int main()
+{
+      A a;
+      a.x=100;        //对象用点访问
+      // a->y=100;     //error
+      A* pa = new A;
+      pa->y=200;      //对象指针用箭头
+     // pa.x=100;     //error<br>　　　　delete pa;
+      return 0;
+}
+
