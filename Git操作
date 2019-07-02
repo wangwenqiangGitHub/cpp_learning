@@ -32,22 +32,21 @@ ls
 rm CMakeLists.txt ReadMe.md  include/ msg/ package.xml src/ -rf
 ls
 cd ../
-  759  ls
-  760  cd ../
-  761  ls
-  762  cd agv_iot_communicate/
-  763  ls
-  764  cp CMakeLists.txt ReadMe.md include/ msg/ package.xml src/ ../new/agv_iot_communicate/ -ra
-  765  ls
-  766  cd ../
-  767  ls
-  768  cd new/agv_iot_communicate/
-  769  ls
-  770  git status
-  771  git  add .
-  772  git status
-  773  git commit -m "update basic_msg of qbaz qbby"
-  774  ls
-  775  git status
-  776  git log
-  777  git push origin master
+ls
+cd ../
+ls
+cd agv_iot_communicate/
+ls
+cp CMakeLists.txt ReadMe.md include/ msg/ package.xml src/ ../new/agv_iot_communicate/ -ra
+cd ../
+ls
+cd new/agv_iot_communicate/
+ls
+git status
+git  add .
+git status
+git commit -m "update basic_msg of qbaz qbby"
+ls
+git status
+git log
+git push origin master
