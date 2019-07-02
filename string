@@ -127,3 +127,56 @@ int main(){
 first second third
 second
 
+String转换成数组：两个函数data，c_str
+data返回字符数组，不带\0，c_str带\0。
+
+首先验证getline是每次读取一行，直到读取完成
+   #include<iostream>
+   #include<fstream>
+   #include<string>
+   using namespace std;
+   void ReadData()
+   {
+       fstream fin("data.txt");
+       string s;
+       while(getline(fin,s))
+      {
+          cout<<"Read from file:"<<s<<endl;
+      }
+  }
+  int main()
+  {
+      ReadData();
+      return 0;
+  }  
+  可以测试出，输出的文件即为data.txt的内容。
+
+继续验证例子
+string a
+std::ifstream assistFie(a.data)
+std::string line = "";
+if(assisFile.is_open())
+{
+  int begin,end;
+  bedin=end=-1;
+  
+  int order     =0;
+  double  x     =0.0;
+  double  y     =0.0;
+  double  z     =0.0;
+  double  angle =0.0;
+  
+  while(getline(assistFile,line))
+  {
+      for(int i=0;i<line.size();i++)
+      {
+        if(i==begin&&''!=lin.at(i))
+        {
+             begin = i;
+        }
+      }
+  }
+  
+}
+
+
