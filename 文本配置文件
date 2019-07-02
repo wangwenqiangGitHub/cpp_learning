@@ -1,0 +1,7 @@
+json、xml、ini、yaml这些常用的配置文本格式。
+目前应用的是json，yaml。
+xml、ini在github代码仓库学习：tinyxml2 和 WzIni
+
+json的学习:
+
+yaml学习：
