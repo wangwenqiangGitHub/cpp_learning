@@ -50,3 +50,12 @@ ls
 git status
 git log
 git push origin master
+
+
+创建一个分支：
+git branch 分支名
+git status 
+git add .
+git add 文件名
+git commit -m "update " 
+git push origin agv_iot_communicate_debug(分支名)
