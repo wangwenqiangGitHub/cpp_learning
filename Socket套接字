@@ -1,0 +1,93 @@
+http://blog.sina.com.cn/s/blog_a459dcf5010155nf.html
+使用Socket时，需要使用到的库：
+    #define _WINSOCK_DEPRECATED_NO_WARNINGS
+    #pragma  comment (lib,"ws2_32.lib"
+    #include <sys/socket.h>
+    #include <netinet/in.h>
+    #include <sys/un.h>
+    #include <arpa/inet.h>
+××××××××××××××××××××××××××××××××clinet创建函数
+Socket套接字内部的函数：
+定义一个套接字socket(int af,int type,int protocal);
+
+参数af用于指定网络地址类型，一般取AF_INET，表示该套接字在Internet域中，进行通信。
+参数type用于知道套接字的类型，若取SOCK_STREAM表示创建的套接字是流套接字，而取SOCK_DGRAM创建数字报套接字。
+参数protocol用于指定网络协议，一般取0，表示默认为TCP/IP协议。
+
+sockfd=socket(AF_INET,SOCK_STREAM,0)
+if(sockfd == -1)
+{
+  printf("Create socket failed.");
+}
+
+声明一个结构体对象，来处理网络通信的地址
+struct sockaddr_in address;
+int len;
+memset(&address,0,sizeof(address));
+
+链接套接字配置：
+address.sin_family = AF_INET;
+address.sin_addr.s_addr = inet_addr(ip地址);
+address.sin_port= htons(端口号)；
+
+//链接服务器
+int result = connect(sockfd,(struct sockaddr *)&address,sizeof(address));
+if (result==-1)
+{
+  ROS_ERROR("Connect failed");
+}
+×××××××××××××××××××××××××××××××服务端创建函数
+1、首先创建网络通信地址
+struct sockaddr_in c_address;
+struct sockaddr_in s_address;
+
+memset(&s_address,0,sizeof(s_address));
+
+2创建套接字
+s_sockfd = socket(AF_INET,SOCK_STREAM,0)
+if(s_sockfd == -1)
+{
+  printf(error);
+}
+
+3配置地址链接
+s_address.sin_family = AF_INET;
+s_address.sin_add.s_addr = INADDR_ANY;
+s_address.sin_port = htons(8664);
+
+//bind函数，指定ip端口号
+if(bind(s_sockfd,(struct aockaddr *)&s_address, sizeof(s_address))==-1)
+{
+  printf("bind error!");
+  
+}
+
+//监听
+if (listen(s_socket,1)==-1)
+{
+    printf("socket listen error");
+    close(s_sockfd);
+    exit(0);
+}
+//在socket编程中需要设置套接字为非阻塞时，可以使用fcntl函数设置。
+    flags  = fcntl(s_sockfd,F_GETFL);
+    if((flags < 0) ||(fcntl(s_sockfd, F_SETFL, flags | O_NONBLOCK) < 0))
+    {
+        ROS_INFO("fcntl error");
+    }
+socklen_t len;
+// 等待客户端连接
+    while ((c_sockfd = accept(s_sockfd, (struct sockaddr *)&c_address, &len)) == -1)
+    {
+            ;
+    }
+    
+//接收消息函数：
+int recv( SOCKET s, char* buf, int len, int flags );
+s是准备接收数据的套接字，buf是即将收到数据的字符缓冲区，而len则是准备接受的字节数或buf缓冲的长度。
+flags参数可以是0、MSG_PEEK或MSG_OOB或这些标志的按位“或”运算。
+
+int send( SOCKET s, const char* buf, int len, int flags );
+s是已建立连接的套接字描述字，参数buf是字符缓冲区，包含即将发送的数据，参数len用于指定即将发送的缓冲区内的字符数。
+flags可取的值有：0、MSG_DONTROUTE或MSG_OOB或这些标志的按位或运算。
+ 
