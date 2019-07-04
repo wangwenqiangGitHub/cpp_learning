@@ -5,3 +5,32 @@ std::cin >> d；//以读取input stream的方式完成初始化
 
 至于内置类型以外的初始化的任何其他东西，初始化责任落在构造函数（constructors）身上。规则：确保每一个构造函数都将对象的每一个成员初始化。
 
+C++规定，对象的初始化动作发生在进入构造函数本体之前。
+赋值（assignment）与初始化(initialization)的区别：
+class PhoneNumber{...};
+class ABEntry{
+public:
+    ABEntry(const std::string& name,const std::string& address,const std::list<PhoneNumber>& phones);
+ private:
+    std::string theName;
+    std::string theAddress;
+    std::list<PhoneNumber> thePhones;
+    int numTimesConsulted;
+};
+ABEntry::ABEntry(const std::string& name,const std::string& address,const std::list<PhoneNumber>& phones)
+{
+    theName = name;
+    theAddress = address;
+    hePhones = phones;
+    numTimesConsulted = 0;
+}
+//这只是这个函数的成员变量的赋值，而非初始化
+
+ABEntry构造函数的一个较佳的写法是，使用所谓的member initialization list(成员初值列)替换赋值动作。
+构造函数：
+ABEntry::ABEntry()（const std::string& name,const std::string& address,const std::list<PhoneNumber>& phones）
+：theName(name),
+ theAddress(address),
+ thePhones(phones),
+ numTimesConsulted(0)
+ {}
