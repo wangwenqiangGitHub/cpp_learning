@@ -2,7 +2,7 @@ string是C++中常用的一个类
 
 使用string 就要包含string类，即#include<string>
 
-定义string类的变量的方法：
+1-定义string类的变量的方法：
 #include<iostream>
 #include<string>
 using namespace std;
@@ -23,6 +23,7 @@ int main()
 
 string变量可以通过赋值操作符=进行赋值。string 变量也可以通过C风格的字符串进行赋值，例如，s2是用一个字符串常量进行初始化的，而s3则是s2变量进行初始化的。
 
+2-函数length()
 与C风格的字符串不同，当我们需要知道字符串长度时，可以调用string类提供的length()函数。
 string s="http://c.biancheng.net";
 int len = s.length;
@@ -73,8 +74,11 @@ for(int i=0;i<s.length();i++){
 字符串的拼接：
 在string类中，可以使用+或者+=运算符来直接拼接字符串，非常方便，不用再需要C语言
 中的strcat()、strcpy()、malloc()等函数来拼接字符串了，也不用担心空间不会会溢出。
-
-
+3-函数atoi():
+	int x;
+  string str;
+  x = std::atoi(str.c_str());
+将sting类型转换为int类型
 
 
 
