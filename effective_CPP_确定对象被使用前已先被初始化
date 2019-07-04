@@ -34,3 +34,5 @@ ABEntry::ABEntry()（const std::string& name,const std::string& address,const st
  thePhones(phones),
  numTimesConsulted(0)
  {}
+
+如果成员变量是const或者reference，它们就一定需要初值，不能被赋值。
