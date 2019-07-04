@@ -18,7 +18,6 @@ git push origin master
 ls
 cd ../
 ls
-mkdir mew
 mkdir new
 ls
 rm mew/ -rf
@@ -59,3 +58,10 @@ git add .
 git add 文件名
 git commit -m "update " 
 git push origin agv_iot_communicate_debug(分支名)
+
+git查看所有分支:
+git branch -a
+git branch //查看本地分支
+
+下载远程分支
+git clone -b test https://github.xxxx.git;//test是分支名字
