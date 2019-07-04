@@ -1,0 +1,13 @@
+sudo apt-get install gnome-tweak-tool
+sudo apt-get install gnome-shell-extensions
+在ubuntu软件管理中安装插件Dash to dock
+
+风格与图标
+风格：
+https://github.com/vinceliuce/vimix-gtk-themes
+也可以访问https://vinceliuce.github/vimix-iocon-theme更多风格
+
+使用方法
+下载releases包
+解包并执行./install.sh
+
