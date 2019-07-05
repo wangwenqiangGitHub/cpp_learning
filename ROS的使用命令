@@ -1,0 +1,5 @@
+//查看现有的topic
+rostopic list
+
+//查看topic的内容
+rostopic echo  /task_data
