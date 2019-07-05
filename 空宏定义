@@ -13,3 +13,17 @@
 1.开关作用
 2.有时起到注释作用
 3.有时起到方便移植的作用
+
+工作中遇到的空宏：作用基本是开关的作用。
+在a.h文件中定义空宏
+#define So
+
+在a.cpp中的体现是：
+#ifdef So
+    struct cqqan_frame frame;
+    frame.ccc=0;
+    frame.bbb=msg;
+#endif
+这就是一个开关作用的体现。
+
+
