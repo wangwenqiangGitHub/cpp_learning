@@ -1,6 +1,8 @@
 C++中的struct不在仅仅代表数据结构
 C++中的srtuct与class一样可以继承、多态、对象
 C++中的struct与class不同之处是，默认的访问权限是，struct是public，class是private
+1、在默认的继承访问权限上，struct是public，class是private;
+2、在默认的成员访问权限上，struct是public，class是private；
 
 写代码时候，用class来定义类，而使用struct来定义结构体，这样语义更加确定。
 
