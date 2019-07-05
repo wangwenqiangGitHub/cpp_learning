@@ -13,3 +13,11 @@ https://github.com/vinceliuce/vimix-gtk-themes
 
 ubuntu安装使用zsh
 https://www.houdunren.com/edu/front/topic/617?sid=1&mid=2
+
+
+安装google:
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+安装qtcreator
+安装qtcreator ros插件
+
