@@ -1,0 +1,6 @@
+第一中用法是：：是域操作符 CWin Thread::m_pMainWnd表示m_pMainWnd是CWin Thread中的变量
+第二中用法：代表继承。 class CrrrDlg:public CDialogEx（。。。。。）;CrrrDlg类以public方式继承类CDialogEx；
+
+唯一例外的时候，：：左侧没有东西的时候，代表右侧的函数是全局函数。
+
+继承和派生可以理解为是一个意思。既然它们是一个意思，那么怎么写继承，就怎么写派生。A派生了B，也是B:A。
