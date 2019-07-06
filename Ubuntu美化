@@ -19,5 +19,19 @@ https://www.houdunren.com/edu/front/topic/617?sid=1&mid=2
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 安装qtcreator
-安装qtcreator ros插件
+1.到官网http://download.qt.io/archive/qt/下载 Qt 安装包;
+2.打开终端，输入命令：“sudo chmod -R 777 qtopensource-linux-x64-5.7.0.run”,赋予安装包权限；
+3：开始安装 Qt,输入命令“./qt-opensource-linux-x64-5.7.0.run”或者“sudo ./qt-opensource-linux-x64-5.7.0.run”,
+两者的区别在于，一个是将 Qt 默认安装在 home 目录下，后者是将 Qt 安装在根目录／opt 下，
+当然你也可以在图形界面安装过程中自行设置安装路径，但是建议最好不要；
 
+4.创建终端命令：~$ sudo vi /usr/bin/qtcreator
+  /usr/bin$ sudo chmod a+x qtcreator
+  
+
+
+安装qtcreator ros插件
+sudo add-apt-repository ppa:levi-armstrong/qt-libraries-xenial
+sudo add-apt-repository ppa:levi-armstrong/ppa
+sudo apt-get update && sudo apt-get install qt57creator-plugin-ros
+https://blog.csdn.net/u010925447/article/details/81702166
