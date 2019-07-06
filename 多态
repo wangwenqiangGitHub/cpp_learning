@@ -1,1 +1,3 @@
 http://c.biancheng.net/cpp/biancheng/view/2987.html
+
+基类在定义成员函数时已经声明了virtue关键字，在派生类实现的时候覆盖该函数时，virtue关键字可加可不加，不影响多态的实现
