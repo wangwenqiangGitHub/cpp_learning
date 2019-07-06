@@ -14,6 +14,26 @@ const对象
 const可以用来修饰对象，成为常对象。一旦将对象定义为常对象之后，不管是哪种形式，该对象就只能被const修饰的成员（包括const成员变量和const成员函数），
 因为非const成员可能会修改对象的数据（编译器也会这样假设），c++进制这样做
 
+对于类城阳函数声明后接const，表明在写函数时，若是不慎修改了数据成员，或者调用了其他非const成员函数，编译器会指出错误。例如：
+class Stack
+{
+  public:
+      void Push(int elem);
+      int Pop(void);
+      int GetCount(void) const;// const 成员函数
+  private:
+      int a;
+      int data[100];
+};
+int Stack::GetCount(void) const
+{
+  ++a;       //编译错误，企图修改函数成员a
+  Pop();     //编译错误，企图调用非const函数
+  return a；
+}
+
+
+
 
 
 c++类的知识：
