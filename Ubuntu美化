@@ -28,6 +28,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 4.创建终端命令：~$ sudo vi /usr/bin/qtcreator
   /usr/bin$ sudo chmod a+x qtcreator
   
+  https://www.cnblogs.com/Cmfvacks-IsLjj/p/4986185.html
 
 
 安装qtcreator ros插件
