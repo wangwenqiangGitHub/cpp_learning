@@ -1,0 +1,16 @@
+C++编译器对于空类，会产生四个函数：构造函数/析构函数/拷贝构造函数/拷贝赋值操作符
+class empty()
+{
+ public:
+    empty(){};
+    ~empty(){};
+
+    empty(const empty &){};//copy构造函数
+    empty& operator=(const empty&){};
+    
+};
+
+empty a1; //default析构函数
+          //析构函数
+empty a2(a1);//copy构造函数
+a2 = a1;     //copy assignment操作符
