@@ -1,5 +1,78 @@
+1 创建工作空间:
+mkdir -p ~/dev/catkin_ws/src
+cd ~/dev/catkin_ws/src
+catkin_init_workspace
+
+cd ~/dev/catkin_ws
+catkin_make
+生成build和devel文件,工作空间创建完成.
+2 echo "source opt/ros/<ros版本>/setup.sh">>~/.bashrc
+
+3 创建ros的功能包和综合功能包
+cd ~/dev/catkin_ws/src
+catkin_creat_pkg  [packege_name] [depend1] [depend2] [depend3]
+这些依赖项包括了常见的消息类型,std_msg包含了常见的消息类型,表示基本数据类型和其他基本的消息构造,如多维数组,
+roscpp包括使用C++完成ROS的各种功能
+
+4 对于节点的操作命令
+rosnode info <节点>
+rosnode ping
+rosnode machine 
+rosnode kill
+rosnode cleanup
+
+5 对于topic的消息
+rostopic bw TOPIC 显示主题所使用的带宽
+rostopic echo TOPIC 将消息输出到屏幕
+rostpic find TOPIC 
+rostopic list
+rostopic pubs TOPIC
+
+
+
+
+1.topic命令:
 //查看现有的topic
 rostopic list
 
 //查看topic的内容
 rostopic echo  /task_data
+
+
+功能包:
+ros的功能包是指一种特定的文件结构和文件夹组合.这种结构如下所示:
+include/package_name/: 此目录包含了需要的库的头文件.
+msg/:                  如果开发非标准的消息,可以存放文件在此文件夹.
+scripts/:              其中包含bash/python或者其他脚本的可执行脚本文件.
+src/:                  这是存储程序源文件的目录,可以为节点创建文件夹或者其他方式组织.
+srv/:                  这表示服务(srv)类型.
+CMakeLists.txt:        这是生成CMake的生成文件.
+package.xml            这是功能包清单文件
+
+创建/修改/使用功能包命令:
+rospack: 查找功能包
+rospack find        <功能包名字>
+catkin_create_pkg   创建一个新的功能包
+catkin_make         编译工作空间
+rosdep              此命令安装功能包的依赖项
+rqt_dep             查看包的依赖关系图
+
+package.mxl文件必须在功能包中,用来说明此功能包的相关各类信息.如果你发现在某个文件夹中包含此文件,那么这个文件夹可能是一个功能包或者综合功能包
+打开一个package.xml文件,可以看到包的名称,依赖关系等信息,功能包清单的作用是为了更容易的安装和分发这些功能包.
+package.xml文件中两个典型的标记<build_depend>和<run_depend>
+<build_depend>标记会显示当前功能包安装之前必须先安装哪些包.这是因为新的包会使用其他包的一些功能.
+<run_depend>标记显示运行功能包代码所需的包.
+
+综合功能包:
+用于引用其他功能特性类似的功能包,例如导航包/ros_tutorials等
+定位综合功能包:
+rosatack find ros_tutorials
+
+消息:
+ros使用一种简化的消息类型来描述ros节点发布的数据值,通过这样的描述语言,ros可以实现多种编程语言生成不同类型消息的源代码
+创建的新的消息类型放在msg/文件下,都以.msg为扩展名.
+
+服务:
+ROS使用了一种简化的服务描述语言来描述ROS的服务类型.直接借鉴了ROS msg消息的数据格式,以实现节点之间的请求/响应通信.服务之间的存储功能包的srv子目录下.srv文件中.
+
+
