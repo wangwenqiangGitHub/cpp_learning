@@ -26,8 +26,8 @@ rostopic bw TOPIC 显示主题所使用的带宽
 rostopic echo TOPIC 将消息输出到屏幕
 rostpic find TOPIC 
 rostopic list
-rostopic pubs TOPIC
-
+rostopic pubs TOPIC  将数据发布到主题
+rostopic type TOPIC  输出主题的类型
 
 
 
