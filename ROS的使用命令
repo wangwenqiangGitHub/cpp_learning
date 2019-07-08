@@ -70,10 +70,26 @@ int main(int argc,char **argv)
     }
     return 0;
 }
+sub节点:
+example1_b.cpp
+#include "ros/ros.h"
+#inlcude "std_msgs/String.h"
 
+//每次节点收到一条消息时将调用此函数,我们就可以使用或处理数据.
+void chatterCallback(const std_msg::String::ConstPtr& msg) 
+{
+    ROS_INFO("I heard: [%s]", msg->data.c_str());
+}
 
-
-
+int main(int argc ,char **argv)
+{
+    ros::init(argc,argv,"example_b");
+    ros::NodeHandle n;
+    //创建一个订阅者,并从主题获取以message为名称的消息数据,设置缓存区为1000个消息,处理消息的回调函数messageCallback
+    ros::Subscriber sub = n.subscribe("message" , 1000 ,chatterCallback);
+    ros::spin();//节点开始读取主题和在消息到达时,回调函数messageCallback被调用的循环,当用户按下ctrl+C节点会退出消息循环,于是循环结束.
+    return 0;
+}
 
 1.topic命令:
 //查看现有的topic
