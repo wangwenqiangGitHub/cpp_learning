@@ -1,0 +1,25 @@
+链接gitlab或者github,首先生成公钥:
+
+命令行:
+ ssh-keygen    //一直按回车
+ cd .ssh/
+ cat  id_rsa.pub
+ 将秘钥添加到gitlab中的SSH中
+ 
+ 
+ 首先的操作是在同一个wifi网络下:
+ 使用xshell/winSCP http://www.mydown.com/soft/433/473302433.shtml 工具
+ 
+ ubuntu所有的库基本是在usr/lib中,或者usr/local/lib中
+ 
+
+ 使用win10登录nviadia机器ubuntu:例如 ubuntu机器的ip地址是192.168.1.110
+ 命令行:
+ ping 192.168.1.110
+ ssh nvidia@192.168.1.110
+ 输入yes
+ 输入ubuntu的密码
+ 即可以远程访问;
+ 
+ 从ubuntu拷贝文件到win10:首先新开一个终端,在win10下,使用命令行:scp -r nvidia@192.168.1.110:/usr/local/lib  C:\Users\desktop(可以直接拖拽一个文件)
+ 从win10拷贝到ubuntu可以反过来操作,也是在win10终端下.
