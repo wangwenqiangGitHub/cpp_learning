@@ -29,6 +29,50 @@ rostopic list
 rostopic pubs TOPIC  将数据发布到主题
 rostopic type TOPIC  输出主题的类型
 
+6. 服务是能够使节点之间相互通信的另外一种方法,服务允许节点发送请求和接收响应.
+命令:
+rosservice args/service   输出服务参数
+rosservice call/service   根据命令行参数调用服务
+rosservice find msg-type  根据消息类型查询服务
+rosservice info /service  输出服务信息
+rosservice list           列出服务活动清单
+rosservice type/service   输出服务类型
+rosservice uri/service    输出ROSRPC URI
+
+7.创建节点:
+两个节点:一个发布数据,另一个接收这些数据.这是两个节点之间最基本的通信方式,也就是操作数据并使用这些数据来做些工作.
+pub节点:
+example1_a.cpp
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include <sstream>
+//ros/ros.h包含了使用ROS节点所必要的文件,而std_msgs/String.h包含了我们要使用的消息类型:
+
+int main(int argc,char **argv)
+{
+    ros::init(argc,argv,"example1_a");             //启动该节点并设置其名称,这个名称是唯一的
+    ros::NodeHandle n;                             //设置节点进程的句柄
+     //将节点设置为发布者并将所发布的主题和类型的名称告知节点管理器.第一个参数是缓存区的大小,名称为message.
+     //如果主题发布速度较快,那么将缓存区设置为1000个消息
+    ros::Publisher chatter_pub = n.advertise<std_msgs::string>("message" , 1000);
+    ros::Rate loop_rate(10);                      //设置发送数据的频率为100HZ;
+    while(ros::ok())                              //当收到Ctrl+c或者节点停止当前运行命令时,ros::ok()会执行停止节点运行的命令
+    {
+      std_msgs::String msg;
+      std::stringstream ss;
+      ss<<"I am the example1_a node";
+      msg.data = ss.str();      
+                                                 //创建一个消息变量,变量的类型必须符合发送数据的要求.
+     //ROS_INFO ("%s",msg.data.c_str());
+      chatter_pub.publish(msg);                  //消息被发布
+      ros::spinOnce();                           //ros会更新并读取所有主题
+      loop_rate.sleep();                         //按照10HZ的频率将程序挂起
+    }
+    return 0;
+}
+
+
+
 
 
 1.topic命令:
