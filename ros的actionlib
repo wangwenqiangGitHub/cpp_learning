@@ -36,6 +36,11 @@ void actionCb()
   ROS_INFO("Coal just went active");
   
 }
+//收到feedback后调用的回到函数
+void feedbackCb(const action_tutorials::DoDishesFeedbackConstPtr& feedback)
+{
+     ROS_INFO("percent_complete : %f ", feedback->percent_complete);
+}
 
 int main(int argc, char **argv)
 {
