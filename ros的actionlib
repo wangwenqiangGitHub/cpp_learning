@@ -1,0 +1,109 @@
+ROS中常用的通讯机制是topic和service,但是很多场景下.这两种通讯机制不能满足要求,如果获取运动过程的状态,service1来发布运动目标.虽然可以获得反馈,但是反馈
+只有一次,对于运动控制的数据太少了,而且如果反馈没有收到,也只能傻傻等待,其他事也做不了,actionlib就是这样一个解决多个反馈数据的通讯机制.
+
+使用action来发送一个机器人的运动目标,机器人接收到这个action后,就可以开始运动,在运动完成中不断反馈当前的运动状态,在运动过程中我们可以取消运动,让机器人停止,
+如果机器人完成了运动目标,那么action会返回任务完成的标志.
+
+ros中的message是通过.msg文件来定义的,service是通过.srv定义的,action是通过.action文件定义的.
+.action文件:
+#Define the goal
+uint32 dishwasher_id #Specify which dishwasher we want to use
+---
+#Define the result
+uint32 total_dishes_cleaned
+---
+#Define a feedback message
+float32 percent_complete
+编译后会生成一系列的.msg文件
+
+客户端:
+#include<actionlib/client/simple_action_client.h>
+#inlcude "action_tutorials/DoDishesAction.h"
+
+typedef actionlib::SimpleActionClient<action_tutorials::DodDishesAction> Client;
+
+//当action完成后会回调用一次
+viod doneCb(const actionlib::SimpleClientGoalState& state,
+          const action_tutorials::DoDishesResultConstPtr& result)
+{
+    ROS_INFO("Yes! The dishes are now clean");
+    ros::shutdown();
+}
+
+//当action激活后会调用回调函数一次
+void actionCb()
+{
+  ROS_INFO("Coal just went active");
+  
+}
+
+int main(int argc, char **argv)
+{
+  ros::init(argc,argv,"do_dishes_client");
+  
+  //定义一个客户端
+  Client client("do_dishes",true);
+  
+  //等待一个服务器端
+  
+  ROS_INFO("Waitong for action server to start.");
+  client.waitForServer();
+  ROS_INFO("Action server started, sending gaol.");
+  
+  //创建一个action的gaol
+  action_tutorials::DoDishesGoal goal;
+  goal.dishwasher_id = 1;
+  
+  //发送action的gaol给服务器端,并且设置回调函数
+  client.sendGoal(goal, &doneCb, &activeCb, &feedbackCb);
+  
+  ros::spin();
+  
+  return 0;
+  
+  }
+
+服务端:
+#include <ros/ros.h>
+#include <actionlib/server/simple_action_server.h>
+#include "action_tutorials/DoDishesAction.h"
+
+typedef actionlib::SimpleActionServer<action_tutorials::DoDishesAction> Server;
+
+//收到action的goal后回调函数
+void execute(const action_tutorials::DoDishesGoalConstPtr& goal,Server* as)
+{
+    ros::Rate r(1);
+    action_tutorials::DoDishesFeedback feedback;
+    
+    ROS_INFO("Dishwasher %d is working.",goal->disheswasher_id);
+    
+    //假设洗盘子的进度,并且按照1HZ的频率发布进度的feedback
+    for(int i=1;i<=10;i++)
+    {
+    feedback.pencent_complete = i*10;
+    
+    as->publishFeedback(feedback);
+    r.sleep();
+    }
+    
+    //当action完成后,向客户端反馈结果
+    ROS_INFO("Dishwasher %d fish working.",goal->dishwasher_id);
+    as->setSucceeded();
+        
+}
+
+int main(int argc,char ** argv)
+{
+  ros::init(argc,argv,"do_disges_server");
+  ros::NodeHandle n;
+  
+  //定义一个服务器
+  Server server(n, "do_dishes",boost::bind(&execute,_1 , &server),false);
+  
+  //服务器开启运行
+  server.start();
+  
+  ros::spin();
+  return 0;
+}
