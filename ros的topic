@@ -6,6 +6,10 @@ catkin_init_workspace
 cd ~/dev/catkin_ws
 catkin_make
 生成build和devel文件,工作空间创建完成.
+
+编译某个包:catkin_make --only  <packagename>
+清除编译的文件: catkin_make clean
+
 2 echo "source opt/ros/<ros版本>/setup.sh">>~/.bashrc
 
 3 创建ros的功能包和综合功能包
