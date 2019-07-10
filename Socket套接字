@@ -90,4 +90,11 @@ flags参数可以是0、MSG_PEEK或MSG_OOB或这些标志的按位“或”运�
 int send( SOCKET s, const char* buf, int len, int flags );
 s是已建立连接的套接字描述字，参数buf是字符缓冲区，包含即将发送的数据，参数len用于指定即将发送的缓冲区内的字符数。
 flags可取的值有：0、MSG_DONTROUTE或MSG_OOB或这些标志的按位或运算。
- 
+
+ioctl是设备驱动程序中对设备的I/O通道进行管理的函数.所谓管理就是对设备的一些特性进行控制，例如串口的
+的传输波特率等。
+int ioctl(int fd,int cmd,...);
+fd:用户程序打开设备时，使用open函数返回的文件标示符，cmd是用户对设备的控制命令，至于后面的省略号就是一些参数，一般一个，
+这个参数与cmd的意义有关系。
+ioctl函数是文件结构中的一个属性分量，就是说如果驱动程序提供了ioctl的支持，用户就可以在用户进程中使用ioctl函数来控制设备的I/O通道。
+
