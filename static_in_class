@@ -65,6 +65,9 @@ sttic也要遵循，public,private,protect的访问限制
 C++中，静态成员函数的主要目的就是访问静态成员，和静态成员变量类似，静态成员函数在声明时要加static，
 在定义时不能加static。静态成员函数可以通过类来调用（一般是这样），也可以通过对象来调用。
 
+local static和non-local static对象:
+C++中的static是指存储区不属于stack和heap,寿命从被构造出来到程序结束为止的对象,定义与namespace作用域的对象,在class/function/file作用域中被声明为
+static的对象,其中函数内的static对象称为local static对象.其他static对象称为non-local static对象.
 
 
 
