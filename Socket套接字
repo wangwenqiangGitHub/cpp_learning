@@ -81,7 +81,17 @@ socklen_t len;
     {
             ;
     }
-    
+
+如果客户端有链接请求,必须使用下述函数来接收客户端的请求.
+accepct(SOCKET  s,struct sockaddr FAR *addr, int FAR *addrlen);
+addr用于存放客户端的地址,addrlen在调用函数时被设置为addr指向区域的长度,在函数调用结束后被设置为实际地址信息的长度.本函数会阻塞等待知道有客户端请求
+达到.
+函数的返回值是新的套接字描述符,它代表的是和客户端新的连接,可以把它理解成是一个客户端的socket,这个socket包括的是客户端的Ip和port信息.(当然这个new_socket会从sockfd中继承
+服务器的ip和port信息),而参数中的socket s包含的是服务器的ip和port信息.
+
+于是连接之后的send和recv函数中的fd都是指的这个新的new_fd
+
+
 //接收消息函数：
 int recv( SOCKET s, char* buf, int len, int flags );
 s是准备接收数据的套接字，buf是即将收到数据的字符缓冲区，而len则是准备接受的字节数或buf缓冲的长度。
