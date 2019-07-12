@@ -1,0 +1,9 @@
+abstract class
+拥有pure virtual函数的class是abstract class,不能创建abstract class的实体.
+
+pure virtual函数
+他们必须被任何"继承了他们"的具体class重新声明,而且它们在抽象class中通常没有定义.所有的derived class必须重新声明base class的pure virtual函数)
+声明一个pure virtual函数的目的是为了让derived classes值继承函数接口.
+
+impure virtual函数
+声明一个impure virtual函数的目的是为了derived classes继承函数接口和缺省实现.
