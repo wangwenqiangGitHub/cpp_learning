@@ -36,3 +36,13 @@ sudo add-apt-repository ppa:levi-armstrong/qt-libraries-xenial
 sudo add-apt-repository ppa:levi-armstrong/ppa
 sudo apt-get update && sudo apt-get install qt57creator-plugin-ros
 https://blog.csdn.net/u010925447/article/details/81702166
+
+//tmux设置
+https://www.cnblogs.com/liuguanglin/p/9290345.html
+将前缀由ctrl+B改为ctrl+a
+创建~/.tmux.conf文件,内容如下:
+ set-option -g prefix C-a
+ unbind-key C-b
+ bind-key C-a send-prefix
+ bind-key R source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded."
+ 
