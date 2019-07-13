@@ -1,0 +1,40 @@
+按行读取,输出:
+
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespace std;
+
+void ReadData()
+{
+  fstream fin("data.txt");
+  string s;
+  while(getline(fin,s))
+  {
+     cout<<"Read from file:"<<s<<endl;
+  }
+}
+int main()
+{
+    ReadData();
+    return 0;
+}
+
+对于json文件数据的解析:
+对于解析函数:
+::m_data(const std::string &msgId,const unsigned char &msgState,
+          const usigned char &result, const std::sting &returnMsg)
+{
+  json::FastWrite writter;
+  Json::Value root;
+  
+  root["MsgID"]      = msgId;
+  root["MsgState"]   = msgState;
+  root["Result"]     = result;
+  root["MsgID"]      = returnMsg;
+  
+  std::string tmp = root.toStyledString();
+  printf("=============construct connect ack json===============");
+  printf("%s\n", tmp.c_str());
+  return tmp;
+}
