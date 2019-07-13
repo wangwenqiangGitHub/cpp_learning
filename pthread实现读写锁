@@ -1,0 +1,167 @@
+int编写pthread程序,编写两个条件变量和一个互斥量来实现一个读写锁,比较当读优先级更高时和写优先级更高时程序的性能.并进行归纳总结.
+
+1读写锁:
+是一种特殊的锁,它把对资源的访问分成读者和写着,读者只对共享资源进行读访问,写者则需要对共享资源进行写操作.
+
+一次只有一个线程可以占有写模式的读写锁,但是可以有多个线程占有读模式的读写锁.
+当读写锁是写加锁的状态时,这个锁被解锁之前,所有试图对这个锁加锁的线程都会被阻塞;
+当读写锁在读加锁状态时,所有试图以读模式对它们进行加锁的线程都可以获得锁,但是所有试图以写模式对这个锁加锁的线程都会被阻塞;
+
+读优先和写优先
+读优先,给读者优先权,只要读写锁不是写加锁的状态,就可以进行读加锁,同时,当一个写线程解锁时,他应该优先唤醒所有的读加锁等待的线程.
+写优先,给写者优先权,只有在当前状态而不是写加锁并且没有等待时,读加锁才能成功,否则就要等待,同时,当一个线程解锁时,它应该优先唤醒一个写加锁
+等待的线程.
+
+2 相关锁的数据结构
+两个条件变量:分别阻塞读线程和写线程;
+两个读相关的变量,分别记录正在读取的线程数和正在等待读的线程数.
+两个写相关的变量,分别记录是否有正在写的线程和正在等待写的线程;
+一个互斥量.互斥线程对于上述数据的访问和修改.
+
+struct my_rwlock_t{
+//use to lock itself
+pthread_mutex_t mutex;
+
+//read conditonal lock;
+pthread_cond_t read;
+
+//write conditional lock
+pthread_cond_t write;
+
+//record read and write threads
+int read_now;
+int read_wait;
+int write_now;
+int write_wait;
+};
+
+3.实现函数
+读写锁初始化函数:
+void my_rwlock_init(my_rwlock_t* rwlock)
+{
+  pthread_mutex_init(&(rwlock->mutex),NULL);
+  
+  pthread_cond_init(&(rwlock->read), NULL);
+  
+  rwlock->read_now=0;
+  rwlock->read_wait=0;
+  rwlock->write_wait=0;
+  rwlock->write_now=0;
+  
+}
+
+读写锁销毁函数:
+销毁读写锁的条件变量和互斥量:
+void my_rwlock_destroy(my_rwlock_t* rwlock)
+{
+  pthread_mutex_destroy(&(rwlock->mutex));
+  pthread_cond_destroy(&(rwlock->read));
+  pthread_cond_destroy(&(rwlock->write));
+}
+
+读加锁函数:
+根据是否定义了写优先,读加锁有不同的行为:读优先时,只要不是写加锁的状态,就可以进行读加锁;写优先时,只要没有写加锁和写等待才可以进行读加锁.
+//read lock
+void my_rwlock_rdlock(my_rwlock_t* rwlock)
+{
+    pthread_mutex_lock(&(rwlock->mutex));
+    #ifdef WRITE_FIRST
+    //write first
+    //if it is writing or some write is waiting
+    if(rwlock->write_wait>0||rwlock->write_now>0)
+    {
+      rwlock->read_wait = rwlock->read_write + 1;
+      
+      //Wait here
+      pthread_cond_wait(&(rwlock->read),&(rwlock->mutex));
+      
+      //wake up
+      rwlock->read_wait = rwlock->read_wait-1;
+      rwlock->read_now = rwlock->read_now +1;
+      
+    }
+    else
+    rwlock->read_now = rwlock->read_now +1;
+ #else
+ //read first
+ //if no write now
+ if(rwlock->write_now == 0) rwlock->read_now= rwlock->read_now +1;
+ //writeing now, this thread have to wait
+ else
+ {  
+    rwlock->read_wait = rwlock->read_wait - 1;
+    rwlock->read_now = rwlock->read_now +1;
+    
+    
+    
+ }
+ #endif
+ pthread_mutex_unlock(&(rwlock->mutex));
+}
+
+写加锁函数:
+只有没有读加锁和没有写加锁时候,当前线程才可以进行写加锁,否则会发生阻塞
+//write lock
+void my_rwlock_wrlock(my_rwlock_t* rwlock)
+{
+  pthread_mutex_lock(&(rwlock->mutex));
+  //no read and no write 
+  if(rwlock->read_now == 0&&rwlock->write_now==0) rwlock->write_now =rwlock_now +1;
+  //reading or writing
+  else
+  {
+    rwlock->write_wait=rwlock->write_wait + 1;
+    //wait here
+    pthread_cond_wait(&(rwlock-write),&(rwlock->mutex));
+    
+    //wake  up
+    rwlock->write_wait = rwlock->write_wait -1;
+    rwlock->write_now = rwlock->write_now + 1;
+    
+  }
+  pthread_mutex_unlock(&(rwlock->mutex));
+}
+
+解锁函数:
+根据解锁的线程之前进行的读加锁或者写加锁的不同有不同的行为,根据读优先或者写优先的不同也有不同的行为:
+对于读解锁,如果当前的线程多于1,则将当前在读的线程数减一即可,如果当前的锁是在最后一个读锁,则需要唤醒一个写锁的等待
+如果有写等待.
+
+对于写锁,如果读优先,则优先唤醒所有读等待,否则优先唤醒一个写的等待(如果有写等待)
+void my_rwlock_unlock(my_rwlock* rwlock){
+     pthread_mutex_lock(&(rwlock->mutex));
+     
+     //if it is a read thread and there are many readers.
+     if(rwlock->read_now>1) rwlock->read_now = rwlock->read_now-1;
+     
+     //if it is a read thread and there is only one reader.
+     else if (rwlock->read_now == 1){
+     rwlock->read_now =rwlock->read_now - 1;
+     
+     //wake up a writer if needed
+     if(rwlock->write_wait>0) pthread_cond_signal(&(rwlock->write));
+     
+     
+     }
+     
+     //if it is a writer
+     else{
+     rwlock->write_now = rwlock->write_now -1;
+     
+     #ifndef WRITE_FIRST
+     //read first
+     if(rwlock->read_wait>0) pthread_cond_broadcast(&(rwlock->read));
+     else if(rwlcok->write_wait>0) pthread_cond_signal(&(rwlock->write));
+     #else
+     //write first
+     if(rwlock->write_wait>0) pthread_cond_signal(&rwlock->write);
+     else if (rwlock-read_wait>0) pthread_cond_broadcast(&rwlock->read);
+     #endif
+     }
+     
+pthread_mutex_unlock(&(rwlock->mutex));
+
+}
+
+
+
