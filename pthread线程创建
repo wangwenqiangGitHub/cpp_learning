@@ -55,3 +55,4 @@ int main(void)
 }
 
 pthread函数阻塞程序继续运行,等待线程结束,如果线程没有阻塞,则直接运行printf("thread done!");这一行命令.
+
