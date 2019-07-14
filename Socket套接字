@@ -229,3 +229,7 @@ gcc hello_server.c -o hserver
 客户端:
 gcc hello_client.c -o hclient
 ./hclient 127.0.0.1 9999
+
+
+关于套接字的详细解释：
+https://blog.csdn.net/lvyibin890/article/details/80312816
