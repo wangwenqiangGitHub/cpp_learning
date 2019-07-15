@@ -45,4 +45,4 @@ https://www.cnblogs.com/liuguanglin/p/9290345.html
  unbind-key C-b
  bind-key C-a send-prefix
  bind-key R source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded."
- 
+ 使用鏈接：https://www.cnblogs.com/liuguanglin/p/9290345.html
