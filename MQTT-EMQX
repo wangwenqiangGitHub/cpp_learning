@@ -1,6 +1,7 @@
 首先启动emqx;
 在emqx上安装的文件夹内:
-/emq...........下:输入命令:./bin/emqx start
+/emq...........下:输入命令:./bin/  emqx start
+C:\emqx-windows10-v3.1.1\bin>emqx start
 
 在paho或者其他iot客户端上输入:主机ip地址;端口号是:1883
 
