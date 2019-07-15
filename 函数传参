@@ -68,3 +68,23 @@ int main()
       return 0;
 }
 
+传指针最常见:实验验证的实例:
+#include<iostream>
+using namespace std;
+typedef struct
+{
+    int a=5;
+    int b=65;
+}y;
+void fun(y *x)
+{
+    x->a=50;
+    printf("y:%d\n",x->a);
+}
+int main(void)
+{
+  y z;
+  fun(&z);
+  cout<<"Gy = "<<z.a<<endl; //y = 5;
+  return 0;
+}
