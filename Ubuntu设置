@@ -49,3 +49,8 @@ https://www.cnblogs.com/liuguanglin/p/9290345.html
 
 //百度云网盘和WPS安装
 https://baijiahao.baidu.com/s?id=1636644341289618811&wfr=spider&for=pc
+命令行安装:
+sudo dpkg -i baidunetdisk_2.0.1-2_amd64.deb
+sudo apt-get remove baidunetdisk
+
+
