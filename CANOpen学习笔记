@@ -91,4 +91,86 @@ UART每秒传送240个字符,而每个字符格式包含10位(1个起始位,1个
 比特率:单位时间传送的二进制位数.
 波特率:单位时间内传输的符号个数;
 
+第6讲:结合代码理解CAN底层收发数据(含stm32例程)
+CAN发送数据结构:
+CAN发送由我们编程控制的参数.其实是会发现,主要是上面帧格式中内容:ID/IDE/RTR/DLC/Data.
+typedef struct
+{
+        uint32_t StdId;
+        uint32_t ExtId;
+        uint8_t  IDE;
+        uint8_t  RTR;
+        uint8_t  DLC;
+        uint8_t Data[8];
+}CanTxMsg;
+发送配置参数:
+TxMessage.StdId = 0x321;        //标准帧ID
+TxMessage.ExtId = 0x01;         //扩展帧ID(暂未使用)
+TxMessage.IDE   =CAN_ID_STD;    //标准帧(或者扩展帧)
+TxMessage.RTR   =CAN_RTR_DATA;  //数据帧(或者远程帧)
+TxMessage.DLC   =6;             // 长度
+for(i=0; i<TxMessage.DLC;i++)
+{
+        Txmessage.Data[i]=0xA0 +i;
+}
+
+CAN接收代码
+CAN接收其实和发送类似,CAN总线上的字段就那些,在接收端接收的那些参数无非就是发送端发送出来的那些参数.针对STM32内部集成的CAN
+接收数据结构多了一个FMI参数,大概意思就是接受消息邮箱筛选器索引.
+typedef struct
+{
+       uint32_t StdId;
+       uint32_t ExId;
+       Uint8_t IDE;
+       uint8_t RTR;
+       uint8_t DLC;
+       uint8_t Data[8];
+       uint8_t FMI;
+}CanRxMsg;
+
+接收操作:
+CanRxMsg RxMessage;
+CAN_Receive(CANx, CAN_RX_FIFO,&RXMessage);//这里相当于提取参数到Rx数据结构
+
+波特率配置代码
+位时序与波特率的关系:
+/*配置CAN波特率 = 1MBps = 36M/4/(1+3+5) */
+CAN_InitStructure.CAN_SJW = CAN_SJW_1tq;
+CAN_InitStructure.CAN_SJW = CAN_BS1_3tq;
+CAN_InitStructure.CAN_BS2 = CAN_BS2_5tq;
+CAN_InitStructure.CAN_Presaler = 4;
+CAN_Init(CANx, &CAN_InitStructure);
+
+
+
+
+第7讲:CANOpen协议概述
+CANOpen是基于CAN串行总线的网络传输系统应用层协议,遵循ISO/OSI标准模型.
+网络中不同的设备通过对象字典或者对象相互交换数据,其中,主节点可以通过过程数据对象(PDO)或者服务数据对象(SDO)来获取或者修改其他节点对象字典列表中 的数据.
+
+CANOpen协议主要分为三大块:
+CAN总线<-通讯接口(PSO/SDO/特殊功能对象/NMT对象)<->对象字典(数据类型/通信对象/应用对象)<->应用(应用程序/设备子协议实现)<->I/O
+
+通信对象:
+1网络管理对象(NMT):
+网络管理对象包括Boot-up消息,Heartbeat协议及NMT消息,基于主从通信模式,NMT用于管理和监控网络中的各个节点.主要实现三种功能:
+节点状态控制/错误控制和节点启动.
+2服务数据对象(SDO)
+包括接收SDO(R-SDO)和发送SDO(T-SDO);
+通过使用索引和子索引,SDO使客户能够访问设备对象字典中的项.
+SDO通过CAL中多元域的CMS对象来实现,允许传送任何长度的数据,当数据超过4字节时,分拆成几个报文.
+协议是确认服务类型,为每一个消息生成一个应答.SDO请求和应答报文总是包含8个字节.
+3过程数据对象(PDO)
+包括接收PDO(RPDO)和发送PDO(TPDO).
+用来传输实时数据,数据从一个创建者传送到一个或者多个接收者.数据传送限制在1到8个字节.
+每个canopen设备包含8个缺省的PDO通道,4个发送PDO通道和4个接收PDO通道.
+PDO包含同步和异步两种传输方式,由该PDO对应的通信参数决定.
+PDO消息的内容是预定义的,由该PDO对应的映射参数决定.
+同步对象(SYNC):
+同步对象是CANOpen主站周期性地广播到CAN总线的报文,用来实现基本的网络始终信号,每个设备可以根据自己的配置,决定是否使用该事件来跟其它网络进行通信
+
+对象字典:
+对象字典是设备规范中最重要的部分.它是一组参数金和变量的有序集合,包含了设备描述及设备网络状态的所有参数.
+
+
 
