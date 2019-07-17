@@ -14,8 +14,10 @@ Cmake命令不区分大小写,参数使用空格区分
         if(var) #var 非empty 0 N No OFF FALSE... #非运算使用NOT
          …
         else()/elseif() … endif(var)
-    7.循环语句
-     Set(VAR a b c)
+    7.用来显式的定义变量 
+     Set(VAR a b c) 
+     SET (SRC_LST main.c other.c) 
+     说明: 用变量代替值，例子中定义SRC_LST代替后面的字符串。
      Foreach(f ${VAR})       …Endforeach(f)
     8.循环语句
      WHILE() … ENDWHILE()
