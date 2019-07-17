@@ -1,1 +1,5 @@
 ${PROJECT_SOURCE_DIRS}/include表示当前路径,相对路径,对于程序移植时,必须使用相对路局
+一般用法:
+https://blog.csdn.net/damenhanter/article/details/53859779
+cmake编译时打印出消息:
+message()
