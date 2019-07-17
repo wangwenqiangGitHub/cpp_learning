@@ -15,8 +15,10 @@ ubuntu安装使用zsh
 https://www.houdunren.com/edu/front/topic/617?sid=1&mid=2
 
 
-安装google:https://www.google.cn/chrome
+安装google:
+https://www.google.cn/chrome
 sudo dpkg -i google-chrome-stable_current_amd64.deb
+删除谷歌浏览器锁的问题:在终端运行命令:seahorse
 
 安装qtcreator
 1.到官网http://download.qt.io/archive/qt/下载 Qt 安装包;
