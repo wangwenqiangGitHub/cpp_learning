@@ -1,3 +1,6 @@
+安装Ubuntu后卸载软件：
+https://blog.csdn.net/sz793919425/article/details/81706392
+
 sudo apt-get install gnome-tweak-tool
 sudo apt-get install gnome-shell-extensions
 在ubuntu软件管理中安装插件Dash to dock
