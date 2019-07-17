@@ -3,3 +3,20 @@ ${PROJECT_SOURCE_DIRS}/include表示当前路径,相对路径,对于程序移植
 https://blog.csdn.net/damenhanter/article/details/53859779
 cmake编译时打印出消息:
 message()
+命令:
+Cmake命令不区分大小写,参数使用空格区分
+    1.#注释 
+    2.变量：使用set命令显式定义及赋值，在非if语句中，使用${}引用，if中直接使用变量名引用；后续的set命令会清理变量原来的值；
+    3.command (args ...)  #命令不分大小写，参数使用空格分隔，使用双引号引起参数中空格
+    4.set(var a;b;c) <=> set(var a b c)  #定义变量var并赋值为a;b;c这样一个string list
+    5.Add_executable(${var}) <=> Add_executable(a b c)   #变量使用${xxx}引用
+    6.条件语句：
+        if(var) #var 非empty 0 N No OFF FALSE... #非运算使用NOT
+         …
+        else()/elseif() … endif(var)
+    7.循环语句
+     Set(VAR a b c)
+     Foreach(f ${VAR})       …Endforeach(f)
+    8.循环语句
+     WHILE() … ENDWHILE()
+${HELLO_SOURCE_DIR}表示项目根目录
