@@ -1,3 +1,4 @@
+MQTT是应用层的通信协议.
 首先启动emqx;
 在emqx上安装的文件夹内:
 /emq...........下:输入命令:./bin/  emqx start
