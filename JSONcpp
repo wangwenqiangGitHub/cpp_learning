@@ -57,8 +57,58 @@ Json::Reader
      Json::writer和Json::Reader相反，是把Json::Value对象写到string对象中，而且Json::Writer是个抽象类，被两个子类Json::FasterWrite和Json::StyledWriter继承。
      简单的来说fastWriter就是无格式的写入，这样的Json看起来很乱，没有格式，而且StyledWriter就是带有格式的写入，看起来会比较友好。
      
-     Json::Value root;
-     Json::Reader reader;
-     Json::
+     Json::Value      root;
+     Json::Reader     reader;
+     Json::FastWriter fwiter;
+     Json::StyleWriter swriter;
      
+     if(!read.parse("example.json",root))
+     {
+         //psrse fsil
+         return 0;
+     }
      
+     std::string str = fwriter(root);
+     std::ofstream ofs("example_fast_writer.json");
+     ofs<<str;
+     ofs.close();
+     
+     str = swriter(root);
+     ofs.open("example_stryled_writer.json");
+     ofs<<str;
+     ofs.close();
+     结果：
+     example——styled——writerjson
+     {
+            "encoding":"UTF-8",
+            "plug-ins":[
+            “python”,
+            "c++",
+            "ruby"
+            ],
+            "indent" : {"length":3,"use_space":true}    
+     }
+     
+     example_styled_writer.json
+     { "encoding" : "UTF-8", "plug-ins":["python","c++","ruby"],"indent":{"length":3,"use_space":true}}
+     
+判断Value是否为null
+     首先给example.json添加一个key-value对：
+         {
+            "encoding":"UTF-8",
+            "plug-ins":[
+            “python”,
+            "c++",
+            "ruby"
+            ],
+            "indent" : {"length":3,"use_space":true}    
+            “tab-length”:[],
+            "tab":null
+     }
+     
+     f(root["tab"].isNull())
+     {
+     std::cout << "isNull" <<std::endl;//print isNull
+     }
+     
+
