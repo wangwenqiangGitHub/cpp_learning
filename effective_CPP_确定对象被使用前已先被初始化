@@ -36,3 +36,9 @@ ABEntry::ABEntry()（const std::string& name,const std::string& address,const st
  {}
 
 如果成员变量是const或者reference，它们就一定需要初值，不能被赋值。
+
+P30:
+关于初始化的问题：所谓static对象，寿命从构造出来直到程序结束为止，因此stack和heap-based对象都被排除。这种
+对象包括global对象、定义于namespace作用于域内的对象、在class类内、在函数内、以及在file作用于内被声明为static
+的对象。在函数内部的static的对象称为local static对象（因为他们对函数而言是Local），其他static对象称为non-local static对象。
+程序结束时static对象会被自动销毁，也就是它们的析构函数在Main()结束时被自动调用。
