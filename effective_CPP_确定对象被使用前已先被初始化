@@ -42,3 +42,13 @@ P30:
 对象包括global对象、定义于namespace作用于域内的对象、在class类内、在函数内、以及在file作用于内被声明为static
 的对象。在函数内部的static的对象称为local static对象（因为他们对函数而言是Local），其他static对象称为non-local static对象。
 程序结束时static对象会被自动销毁，也就是它们的析构函数在Main()结束时被自动调用。
+
+C++对于定义不同编译单元内的non-local static对象的初始化次序并没有明确定义.这个原因是:决定它们的初始化次序相当困难.常见形式是,多个编译单元内的non-local
+static对象经由"模板隐士具体化"形成,不但不可能决定正确的初始化次序,甚至不值得寻找"可决定正确次序"的特殊情况.
+经过一个小小的设计可以完全消除初始化这个问题:
+       将每个non-local static对象搬到自己的专属函数内(该对象在此函数内被声明为static).这些函数返回一个reference指向它所含的对象.然后用户调用这些函数,而
+       不是直接指涉这些对象.换句话,,non-local static对象被local static对象替换了.
+       C++保证函数内的local static 对象会在"该函数被调用期间""首次遇上该对象之定义式"时被初始化.所以以"函数调用"(返回一个reference指向local static对象)替换
+       ")直接访问non-local static对象",
+
+
