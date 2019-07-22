@@ -78,7 +78,7 @@ git reset HEAD XXX/XXX/XXX.java 就是对某个文件进行撤销了
 从gitlab上down下来的代码是在master分支,如果是在branch分支上开发的话,要切换到branch分支
 git branch     //查看本地分支
 git branch -a  //查看远程分支
-git checkout <分支名>
+git checkout <分支名> //可以直接查看branch分支代码
 
 
 
