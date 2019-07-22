@@ -1,0 +1,14 @@
+下载工程源码:
+#git clone https://github.com/eclipse/paho.mqtt.c.git
+创建build编译目录:
+# cd paho.mqtt.c
+# mkdir build
+
+生成编译环境编译mqttt库
+# cmake .. -DPAHO_BUILD_STATIC=TRUE -DCMAKE_C_COMPILER=/opt/arm-2014.05/bin/arm-none-linux-gnueabi-gcc
+# make
+..  表示CMakeLists.txt所在的相对路径
+-DPAHO_BUILD_STATIC=TRUE 表示生成静态库，不需要可以不加，默认为FALSE。
+-DCMAKE_C_COMPILER=xxx 表示指定交叉编译工具链的绝对路径。
+若编译linux版本的库只需 cmake .. 即可，无需指定编译工具路径。
+make 执行完成后，在build/src目录下即可找到编译生成的库文件，如下图所示
