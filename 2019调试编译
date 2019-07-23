@@ -1,0 +1,20 @@
+1.编译完ros的package节点后,删除:
+    /home/nvidia/catkin_ws/devel/include# rm -rf agv_iot_communicate/
+    /home/nvidia/catkin_ws/devel/lib# rm -rf agv_iot_communicate/
+    /home/nvidia/catkin_ws/build# rm -rf agv_iot_communicate/
+2.查看文件信息:
+    file *
+    使用objdump -a *.a命令查看是x86平台还是arm平台
+3.查看ubuntu版本
+    uname -a
+4.修改系统时间:
+     date
+     date -s "mm/dd/yy"
+5.动态库和静态库编译:
+    在源码文件夹下:src/
+    动态库:
+        g++ -fPIC -static -o libjson2pgm.a *.cpp -std=c++11
+     静态库:
+        g++ -c *.cpp -std=c++11
+        ar -cr libjson2pgm.a *.o
+        
