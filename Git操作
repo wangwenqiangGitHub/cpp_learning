@@ -81,5 +81,28 @@ git branch -a  //查看远程分支
 git checkout <分支名> //可以直接查看branch分支代码
 
 https://www.cnblogs.com/fengff/p/10251853.html
+使用新的github：命令
+mkdir test
+git init
+git config --global user.name "github账号"
+git config --global user.name "邮箱"
+git status
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/wangwenqiangGitHub/test.git
+git push -u origin master
+
+git remote 不带参数，列出已经存在的远程分支
+git remote -v列出详细信息
+添加远程的的仓库：
+git remote add origin git://github.com/paulboone/ti.p
+
+git fetch和git pull的差别
+git fetch相当于是从远程获取最新到本地，不会自动merge，
+git fetch origin master //将远程仓下载到当前分支
+git pull相当于从远程获取最新版本并merge到本地
+git pull origin master
+实际使用中，git fetch更加安全
+
 
 
