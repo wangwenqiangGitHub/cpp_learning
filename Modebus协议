@@ -11,6 +11,7 @@ Modebus协议使用的是主从通信技术，即由主设备主动查询和操�
 https://blog.csdn.net/rafiki/article/details/7729959
 https://blog.csdn.net/super828/article/details/83662945
 https://www.jianshu.com/p/4f122fb1be3f
+https://blog.csdn.net/weixin_39754256/article/details/84256868
 
 Modbus协议包括ASCII/RTU/TCP.
 Modbus选择物理通讯接口为RS232和RS485时,选择ASC/RTU协议,Modbus-TCP采用以太网,串行协议中除了有奇偶校验,ASCLL模式采用LRC校验,
@@ -20,3 +21,5 @@ TCP和RTU协议非常类似，只要把RTU协议的两个字节的校验码去�
 
 以太网，对应的通信模式是MODBUS TCP。
 异步串行传输（各种介质如有线RS-232-/422/485/；光纤、无线等），对应的通信模式是MODBUS RTU或MODBUS ASCII。
+
+modbus-tcp-MBAP:事务处理标识符 同一时刻 标识符唯一
