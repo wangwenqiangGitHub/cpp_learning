@@ -1,0 +1,17 @@
+在C++中使用线程创建函数与回收函数:
+
+#include <thread>
+std::thread myThread(myTask);
+myThread.join();
+
+void myTask()
+{
+    printf("helloWorld!"\n);
+}
+
+线程创建函数:
+    myThread.detach();
+    myThrea.join();
+    join如果新线程使用了共享变量,等到新线程执行完再销毁这个线程对象,不会产生异常.
+    detach新线程与原线程分离,如果使用原线程执行完毕,销毁线程对象及局部变量,并且新线程有共享变量或者引用之类,这样新先线程的变量就会变成未定义
+    产生异常或者不可预测的错误.
