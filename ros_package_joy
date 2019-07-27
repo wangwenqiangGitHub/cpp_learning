@@ -1,0 +1,11 @@
+https://www.2cto.com/kf/201709/678297.html
+支持linux上的所有手柄。
+使用方法：
+    安装功能包：
+    sudo apt-get install ros-indigo-joy
+    查看驱动：
+    ls /dev/input
+    查看手柄是否工作：
+    sudo jstest /dev/input/jsX    jsX代表：js0等
+    查看手柄数据：
+    rostopic echo joy
