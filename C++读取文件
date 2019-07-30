@@ -1,0 +1,18 @@
+方法1：
+    ifstream myfile("mydate.txt");
+    string content = "";
+    string line    ="";
+    std_msgs::String taskData;
+    if (myfile.is_open())
+    {
+        while(getline(myfile,line))
+        {
+            content +=line;
+            content +="\n";
+            line    ="";
+         }
+         myfile.close();
+         cout<<content<<endl;
+    }
+    
+ 方法2：
