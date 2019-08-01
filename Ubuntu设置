@@ -66,3 +66,10 @@ sudo apt-get remove baidunetdisk
 ssh nvidia@192.168.1.110
 输入:用户名:nvidia 密码:nividia
 既可以连接
+
+
+//win10   WSL安装
+https://www.jianshu.com/p/6b02948b3d37
+https://www.jianshu.com/p/8404e34feefe
+可视化工具:
+https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/Xming-6-9-0-31-setup.exe/download?use_mirror=nchc
