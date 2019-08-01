@@ -15,32 +15,18 @@ git commit -m "update basic_msg of qbaz and abby"
 git branch
 push origin master
 git push origin master
-ls
-cd ../
-ls
-mkdir new
-ls
-rm mew/ -rf
-ls
-cd new/
-ls
-git clone http://10.8.200.161/zaqaler.zhao/agv_iot_communicate.git
-ls
+
+git clone http://
 cd agv_iot_communicate/
 ls
 rm CMakeLists.txt ReadMe.md  include/ msg/ package.xml src/ -rf
-ls
-cd ../
-ls
-cd ../
-ls
+
 cd agv_iot_communicate/
 ls
 cp CMakeLists.txt ReadMe.md include/ msg/ package.xml src/ ../new/agv_iot_communicate/ -ra
-cd ../
-ls
+
 cd new/agv_iot_communicate/
-ls
+
 git status
 git  add .
 git status
@@ -104,5 +90,11 @@ git pull相当于从远程获取最新版本并merge到本地
 git pull origin master
 实际使用中，git fetch更加安全
 
+git add空文件:
+首先在空文件中建立一个.gitignore文件.
+在上传
 
+查看git修改的文件: gitk
 
+切换到远程分子上的操作:
+git checkout -b 分支名  origin/分支名
