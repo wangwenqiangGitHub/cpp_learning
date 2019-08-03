@@ -1,0 +1,8 @@
+ctrl+p:C_CPP_properties.json
+包含ros头文件:
+"C:\\Users\\BZl\\AppData\\Local\\Packages\\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\\LocalState\\rootfs\\opt\\ros\\melodic\\include"
+"/home/cjiejie/catkin_ws/src/dzpt_joy/include",﻿
+ "/home/cjiejie/catkin_ws/devel/include",
+                "/opt/ros/melodic/include",
+
+格式化代码:ctrl+K+F
