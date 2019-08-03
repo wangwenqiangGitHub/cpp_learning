@@ -2,3 +2,7 @@ EMQ的安装
 https://blog.csdn.net/qq_26182739/article/details/87437721
 
 实现与MQTT的发布订阅
+
+Eclipse Paho MQTT 工具下载与安装与使用的方法
+1.首先安装java开发环境
+2.安装paho客户端,充当iot端.https://jingyan.baidu.com/article/25648fc16b8e969191fd00be.html
