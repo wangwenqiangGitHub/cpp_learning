@@ -1,0 +1,4 @@
+https://blog.csdn.net/flowing_wind/article/details/81301001
+智能指针:
+    shared_ptr<string> p1;
+    shared_ptr<list<int>> p2;
