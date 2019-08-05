@@ -6,3 +6,8 @@ ctrl+shift+p:C_CPP_properties.json
                 "/opt/ros/melodic/include",
 
 格式化代码:ctrl+K+F
+
+
+               "/home/ai-iot/catkin_ws/src/dzpt_joy/include",
+                "/home/ai-iot/catkin_ws/devel/include",
+                "/opt/ros/kinetic//include"
