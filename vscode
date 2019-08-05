@@ -8,6 +8,13 @@ ctrl+shift+p:C_CPP_properties.json
 格式化代码:ctrl+K+F
 
 
-               "/home/ai-iot/catkin_ws/src/dzpt_joy/include",
-                "/home/ai-iot/catkin_ws/devel/include",
-                "/opt/ros/kinetic//include"
+"/home/ai-iot/catkin_ws/src/dzpt_joy/include",
+"/home/ai-iot/catkin_ws/devel/include",
+"/opt/ros/kinetic//include"
+
+//ubunu中设置vscode编译ros
+设置环境变量:
+ export PATH=$PATH:/usr/share/code/bin
+安装ros插件:
+
+配置settings.json launch.json
