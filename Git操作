@@ -98,3 +98,12 @@ git add空文件:
 
 切换到远程分子上的操作:
 git checkout -b 分支名  origin/分支名
+
+git删除远程分支上的文件夹:先删除本地,提交,在重新在本地添加修改的文件夹(重命名)
+ git rm TileAIO_joy
+ git rm -r TileAIO_joy
+ git commit -m  "delete old TileAIO_joy"
+ git push
+ 
+ 删除分支:
+  git branch -d <分支名字>
