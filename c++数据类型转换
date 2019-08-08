@@ -1,0 +1,54 @@
+https://blog.csdn.net/thecentry/article/details/78477212
+
+https://blog.csdn.net/LYH2277/article/details/82947649
+
+1. c_str()：生成一个const char*指针，指向以空字符终止的数组。
+
+2. data():与c_str()类似，但是返回的数组不以空字符终止。
+
+
+编程中出现char* 与string/wstring/CString之间的转换;
+
+//char* string 与int float double之间的转换.
+以下为程序头文件:
+
+#inlcude<iostream>
+#include<string>
+#include<ssrtream>
+using namespace std;
+
+char* char[] 与string 类型之间的转换;
+int cp1()
+{
+  char *p = "abcd";
+  char t[] = "abcde";
+  string test;
+  test = p;
+  cout << test <<endl;
+  cout << test.length() <<endl;
+  return 0;
+}
+
+int cp2()
+{
+  string test = "abc";
+  char t[10];
+  strcpy(t, test.c_str());
+  cout << t << endl;
+  cout << strlen(t) <<endl;
+  
+  char *te;
+  int number = test.length();
+  te = new char[number + 1];
+  cout << number <<endl;
+  
+  strcpy(te, test.c_str());
+  cout << te << endl;
+  cout << strlen(te) << endl;
+  
+  delete[] te;
+  return 0;
+}
+
+
+
