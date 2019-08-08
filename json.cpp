@@ -112,3 +112,9 @@ Json::Reader
      }
      
 
+Value:: isNull() / isBool() / isInt() / isDouble() / isString() / isArray() / isObject() etc..
+判断Json节点对象类型：JsonRoot[node].isInt()
+
+Value:: asString() / asInt() / asDouble / asBool()
+将Json数据转为对应类型
+
