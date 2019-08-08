@@ -52,5 +52,112 @@ int cp2()
   return 0;
 }
 
+//string到const char*之间的转换:\
+int CP3()
+{
+  const char* c;
+  string test = "1234";
+  c = test.c_str();
+  cout << c <<endl;
+  const char* t;
+  t = test.data();
+  cout << t << endl;
+}
 
+//int到string的转换
 
+int CP4()
+{
+  int nt = 30;
+  char c[30];
+  
+  //using C template to trans tfrom int to string
+  itoa(nt, c, 10);//以参数3位为进制,以几进制转换为 char
+  cout << c <<endl;
+  cout << strlen(c) <<endl;
+  
+  //using string stream to trans from int to string 
+  stringstream test;
+  test << nt;
+  string stest = test.str();
+  cout << stest <<endl;
+  cout << stest.length() << endl;
+  
+}
+
+//sting到int的转换
+int CP5()
+{
+  string test = "17";
+  char* t;
+  
+  int nt = static_cast<int>(strtol(test.c_str(), &t, 10));//10 表示转换进制
+  cout << nt <<endl;
+  int nte;
+  sscanf(test.c_str(), "%d", &nte);//%d 表示十进制
+  cout << nte <<endl;
+  
+  //using stringstream to trans from string to int 
+ stringstream stest;
+ stest << test;
+ int ntes;
+ stest >> ntes;
+ cout << ntes << endl;
+ 
+ //using C template to trans from string tio int 
+ int ntest = atoi(test.c_str());
+ cout << ntest << endl;
+ 
+ //using C++ template to trans from string to int
+ int nnt;
+ nnt = stoi(test.c_str());
+ cout << nnt <<endl;
+ return 0;
+}
+
+//string to double 的转换
+int cp6()
+{
+    string test = "17.101";
+    //using C template to trans from double to string 
+    double t = atof(test.c_str());
+    cout << t << endl;
+    return 0;
+}
+
+数值类型到string的转换可以有以下几种:
+(1)函数模板+stringstream
+int 型转换为string型
+
+void int2str(const int &int_temp,string &string_temp)
+{
+  stringstream stream(string_temp);
+  stream << int_temp;
+}
+
+string型转int型
+
+void str2int(int &int_temp,const string &string_temp)
+{
+  stringsrtream stream(string_temp);
+  stream >> int_temp;
+}
+
+使用标准库函数std::to_string：
+string to_string (int val);
+string to_string (long val);
+string to_string (long long val);
+string to_string (unsigned val);
+string to_string (unsigned long val);
+string to_string (unsigned long long val);
+string to_string (float val);
+string to_string (double val);
+string to_string (long double val);
+
+使用C标准库函数：
+atoi(str.c_str());
+strtoul(str.c_str(), NULL, 10);
+atof(str.c_str());
+
+使用C++标准库函数：
+stoi（）
