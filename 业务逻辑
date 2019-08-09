@@ -1,0 +1,17 @@
+//move line or spin
+	if( ((fabs(twist->linear.x)>0.001||fabs(twist->linear.y)>0.001)&&fabs(twist->angular.z)<0.001)
+		||((fabs(twist->linear.x)<0.001&&fabs(twist->linear.y)<0.001) && fabs(twist->angular.z)>0.001)) {
+		
+ // 先给舵角延时后再给轮速
+	
+	}
+//w!=0 and linear!=0 spp 
+else if( ((fabs(twist->linear.x)>0.001||fabs(twist->linear.y)>0.001)&&fabs(twist->angular.z)>0.001))
+{
+ //舵角轮速同时给
+}
+//slow down
+else
+{
+	//先给轮速延时后再给舵角
+}
