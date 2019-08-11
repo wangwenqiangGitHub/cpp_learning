@@ -6,6 +6,16 @@ ctrl+shift+p:C_CPP_properties.json
                 "/opt/ros/melodic/include",
 
 格式化代码:ctrl+K+F
+按照层级折叠代码：cmd+k+1,2,3.....
+展开代码：cmd+k+j
+生成新窗口：ctrl+shift+n
+复制光标所在行：shift+alt+向上/向下剪头
+删除光标所在行：ctrl+shift+K
+直接进入下一行：ctrl+enter
+向上跳：crtl+shift+enter
+创建块状注释：shift+alt+a  ctrl /
+打开123个并排标签：ctrl+123
+跳到标签锚点：ctrl+shift+o
 
 
 "/home/ai-iot/catkin_ws/src/dzpt_joy/include",
