@@ -1,4 +1,8 @@
 MQTT是应用层的通信协议.
+
+ubuntu上安装emq:
+https://www.jianshu.com/p/ebbe25d1c4b2?tdsourcetag=s_pctim_aiomsg
+
 首先启动emqx;
 在emqx上安装的文件夹内:
 /emq...........下:输入命令:./bin/  emqx start
@@ -37,5 +41,30 @@ https://www.ibm.com/developerworks/cn/iot/iot-mqtt-why-good-for-iot/index.html
 
 用TLS/SSL保证EMQ的网络传输安全:
 https://www.jianshu.com/p/1602f6db1aa1
+https://www.cnblogs.com/xiating/p/8672887.html
+https://blog.csdn.net/ptonlix/article/details/79866925
+https://www.cnblogs.com/shihuc/p/10285836.html
+https://blog.csdn.net/ptonlix/article/details/79866925
 官方文档:
 https://docs.emqx.io/broker/v3/cn/config.html#mqtt-websocket-with-ssl-8084
+ubuntu上安装emq.
+https://www.jianshu.com/p/ebbe25d1c4b2?tdsourcetag=s_pctim_aiomsg
+使用openssl生成服务器证书和客户端证书
+1.安装openssl : sudo apt-get install openssl
+2.创建CA证书,创建openssl目录 : 在home/ptonlix/work目录下创建openssl目录  mkdir -p /home/ptonlix/work/openssl
+3.将原openssl目录下的ssl/misc/CA.sh拷贝到自己创建的测试目录下：cp /usr/lib/ssl/misc/CA.sh /home/ptonlix/work/openssl
+4.创建主证书: ./CA.sh -newca
+5.生成服务器证书:https://blog.csdn.net/ptonlix/article/details/79866925
+  1.生成服务器私钥：openssl genrsa -des3 -out server.key 1024
+  2.生成csr文件：openssl req -new -key server.key -out server.csr
+  3.签名并生成证书：openssl ca -in server.csr -out server.crt
+  生成客户端证书:
+  1.生成客户端私钥:openssl genrsa -des3 -out client.key 1024
+  2.生成csr文件：openssl req -new -key client.key -out client.csr
+  3.签名并生成证书：openssl ca -in client.csr -out client.crt
+6.https://www.jianshu.com/p/1602f6db1aa1
+  启用TLS/SSL的过程是比较简单的，只需要修改emq.conf文件中的一些配置就可以了：
+  重启EMQ后，用mosquittu_sub来验证TLS是否正常启动：mosquitto_sub -t abc -h emq1 -p 8883 -d --cafile ~/test_certs/MyRootCA.pem  --insecure
+  
+  https://www.jianshu.com/p/511cc22fa700
+  https://www.jianshu.com/p/448f566d3ff0
