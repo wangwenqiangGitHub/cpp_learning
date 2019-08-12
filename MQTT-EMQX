@@ -18,11 +18,7 @@ EMQ的安装
 
 https://blog.csdn.net/qq_26182739/article/details/87437721
 
-
-
 实现与MQTT的发布订阅
-
-
 
 Eclipse Paho MQTT 工具下载与安装与使用的方法
 
@@ -30,14 +26,16 @@ Eclipse Paho MQTT 工具下载与安装与使用的方法
 
 2.安装paho客户端,充当iot端.https://jingyan.baidu.com/article/25648fc16b8e969191fd00be.html
 
-
-
 开启emq:
 
 https://blog.csdn.net/xsfqh/article/details/88981508
 
-
-
 mqtt学习
 
 https://www.ibm.com/developerworks/cn/iot/iot-mqtt-why-good-for-iot/index.html
+
+
+用TLS/SSL保证EMQ的网络传输安全:
+https://www.jianshu.com/p/1602f6db1aa1
+官方文档:
+https://docs.emqx.io/broker/v3/cn/config.html#mqtt-websocket-with-ssl-8084
