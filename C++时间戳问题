@@ -1,0 +1,26 @@
+  1 #include <stdio.h>                                                                                                    2 #include<iostream>
+  3 #include <sstream>
+  4 #include <time.h>
+  5 int main ()
+  6 {
+  7     time_t t;
+  8     struct tm * lt;
+  9     time (&t);//获取Unix时间戳。
+ 10
+ 11     std::cout << t << std::endl;
+ 12
+ 13
+ 14  std::stringstream ss;
+ 15  ss << t ;
+ 16     std::string mytest = "abc"+ss.str();
+ 17
+ 18     std::cout << mytest << std::endl;
+ 19 //    lt = localtime (&t);//转为时间结构。
+ 20  //   printf ( "%d/%d/%d %d:%d:%d\n",lt->tm_year+1900,\
+ 21  //           lt->tm_mon, lt->tm_mday, lt->tm_hour, lt->tm_min, lt->tm_sec);//输出结果
+ 22
+ 23
+ 24     return 0;
+ 25 }
+ 
+ 将时间戳转换为string类型;
