@@ -13,3 +13,31 @@ C:\emqx-windows10-v3.1.1\bin>emqx start
 
 
 使用http://localhost:18083登录控制器台
+
+EMQ的安装
+
+https://blog.csdn.net/qq_26182739/article/details/87437721
+
+
+
+实现与MQTT的发布订阅
+
+
+
+Eclipse Paho MQTT 工具下载与安装与使用的方法
+
+1.首先安装java开发环境:https://www.cnblogs.com/xttc/p/6475670.html
+
+2.安装paho客户端,充当iot端.https://jingyan.baidu.com/article/25648fc16b8e969191fd00be.html
+
+
+
+开启emq:
+
+https://blog.csdn.net/xsfqh/article/details/88981508
+
+
+
+mqtt学习
+
+https://www.ibm.com/developerworks/cn/iot/iot-mqtt-why-good-for-iot/index.html
