@@ -1,3 +1,25 @@
 https://blog.csdn.net/u012700322/article/details/52244329
 http://wiki.ros.org/roscpp_tutorials/Tutorials/Parameters
 
+ros::NodeHandle nh; //public node handle
+ros::NodeHandle nhPrivate("~"); //private node handle
+
+把写的坐标转换package,改写成在lauch文件中传入参数.
+
+ros::init(argc,argv,"sub");
+ros::NodeHandle n;
+ros::NodeHandle pn("~");
+double x;
+pn.param("/x",p_x,0.3);
+
+ros::init(argc,argv,"sub");
+ros::NodeHandle n;
+double x;
+pn.param("/x",p_x,0.3);
+
+以上两种写法都对;
+ros::init(argc, argv, "sub");
+ros::NodeHandle n;
+ros::NodeHandle pn("~");
+double x;
+
