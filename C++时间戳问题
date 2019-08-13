@@ -59,13 +59,14 @@ str[]="20984 48090";
    using namespace std;
    int main()
    {
-       char buf_temp[256];
+      char buf_temp[256];
       struct timeval time;
       gettimeofday(&time, NULL);
       memset(buf_temp, sizeof(buf_temp),0x00);
       sprintf(buf_temp, "%ld%ld",time.tv_sec, time.tv_usec/1000);
- 
+      
+      printf("this is a :%s\n",buf_temp);  
+     
       cout << buf_temp << endl;
- 
-  return 0;
+      return 0;
   }
