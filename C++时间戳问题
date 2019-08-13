@@ -78,3 +78,29 @@ printf中输出的类型:
 %s:字符串
 %i:有符号十进制数
 %u:无符号十进制数
+
+使用stringstream,输出时间戳，进行封装，测试过：
+   #include<stdio.h>                                                                                                     2 #include<sys/time.h>
+   #include<iostream>
+   #include<cstring>
+   #include<time.h>
+   #include <sstream>
+   using namespace std;
+   std::string timestampFuction()
+  {
+      struct timeval time;
+      gettimeofday(&time, NULL);
+      std::stringstream sss;
+      sss << time.tv_sec;
+      sss << time.tv_usec/1000;
+      std::string a = sss.str();
+      return a;
+  }
+ 
+ int main()
+  {
+       printf("++++++++++++++++++++");
+       std::string ss = timestampFuction();
+       printf("%s\n",ss.c_str());
+       return 0;
+  }          
