@@ -1,5 +1,6 @@
    将时间戳转换为string类型;
-  1 #include <stdio.h>                                                                                                    2 #include<iostream>
+  1 #include <stdio.h>                           
+  2 #include<iostream>
   3 #include <sstream>
   4 #include <time.h>
   5 int main ()
@@ -52,7 +53,8 @@ sprintf(str,"=m",a,b);
 str[]="20984 48090";
 
 测试完成的程序:
-   #include<stdio.h>                                                                                                     2 #include<sys/time.h>
+   #include<stdio.h>                                                                                                     
+   #include<sys/time.h>
    #include<iostream>
    #include<cstring>
    #include<time.h>
