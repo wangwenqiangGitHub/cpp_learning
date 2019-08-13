@@ -37,3 +37,17 @@ struct timeval time;
 gettimeoftoday(&time, NULL);
 memset(buf_temp, sizeof(buf_temp),0x00);
 sprintf(buf_temp, "%d", time.tv_sec);
+
+// sprintf(buf_temp, "%d", time.tv_sec, tv.tv_usec / 1000);
+该函数包含在stdio.h的头文件:
+#include<stdio.h>
+sprintd与printf函数的区别:二者功能相似,但是sprintf函数打印到字符串中,而printf函数输出在屏幕上.sprintf函数在完成其他数据转换成字符串类型的操作中应用广泛.
+char str[20];
+double f=14.309948;
+sprintf(str,"%6.2f",f);
+
+char str[20];
+int a=20984,b=48090;
+sprintf(str,"=m",a,b);
+str[]="20984 48090";
+
