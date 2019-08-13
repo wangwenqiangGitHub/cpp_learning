@@ -1,3 +1,4 @@
+   将时间戳转换为string类型;
   1 #include <stdio.h>                                                                                                    2 #include<iostream>
   3 #include <sstream>
   4 #include <time.h>
@@ -23,4 +24,16 @@
  24     return 0;
  25 }
  
- 将时间戳转换为string类型;
+
+
+
+c语言将时间戳转换为字符串:struct timeval的两个属性分别是秒级和微秒级，都是long类型
+
+头文件:
+#include<sys/time.h>
+char buf_temp[256];
+
+struct timeval time;
+gettimeoftoday(&time, NULL);
+memset(buf_temp, sizeof(buf_temp),0x00);
+sprintf(buf_temp, "%d", time.tv_sec);
