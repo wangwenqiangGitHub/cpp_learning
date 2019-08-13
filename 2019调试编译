@@ -17,4 +17,8 @@
      静态库:
         g++ -c *.cpp -std=c++11
         ar -cr libjson2pgm.a *.o
-        
+6.ros topic重复：
+        ros::ConflictingSubscriptionException'
+        what():  Tried to subscribe to a topic with the same name but different md5sum as a topic that was already 
+        subscribed [agv_iot_communicate/device_info_ack/06d487ccf25106a0580e1d3f5aaeb2ae vs. 
+        agv_iot_communicate/device_info_switch_state/ ；这个话题重复了
