@@ -78,3 +78,6 @@ https://sourceforge.net/projects/vcxsrv/
 //vim常用快捷键
 https://www.cnblogs.com/tianyajuanke/archive/2012/04/25/2470002.html
 代码空格很乱，删除每行的空格：d+0,w,d+w
+
+//ubuntu设置主机名
+hostnamectl set-hostname ubuntu
