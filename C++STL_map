@@ -1,0 +1,4 @@
+map:https://www.cnblogs.com/leaves1024/p/10565834.html
+map是一种关联容器,它按照特定顺序存储由键值Key和映射值Value组合而成的元素.
+在map中,键值key通常用于排序和唯一标识元素,而映射值Value存储与此键值Key相关联的内容,键Key和映射值Value的类型可能不同,并在成员类型value_type中组合在
+一起,value_type是一个组合了两种类型的pair类型:typedef pair<const Key,T> value_type.
