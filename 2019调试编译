@@ -22,3 +22,13 @@
         what():  Tried to subscribe to a topic with the same name but different md5sum as a topic that was already 
         subscribed [agv_iot_communicate/device_info_ack/06d487ccf25106a0580e1d3f5aaeb2ae vs. 
         agv_iot_communicate/device_info_switch_state/ ；这个话题重复了
+7.modbus判断大小端:int x = 1;  if ( *(char *) & x == 1)
+   
+    *(char *)&x
+    先将x的地址(int类型)转换为char *
+    再取这个(char *)地址里的内容*(char *)&x,判断里面的值是否等于1.
+
+    操作对象是 整型数地址 &x
+
+    eg: 如果x的地址为 2000 2001 2002 2003 这四个单元
+    则 *(char *)&x 相当于地址 2000里面的内容. 
