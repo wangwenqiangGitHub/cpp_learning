@@ -22,4 +22,6 @@ ros::init(argc, argv, "sub");
 ros::NodeHandle n;
 ros::NodeHandle pn("~");
 double x;
+pn.param("x",p_x, 0.3);
 
+这种写法是错误的.
