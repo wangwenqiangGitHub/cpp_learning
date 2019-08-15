@@ -81,3 +81,13 @@ https://www.cnblogs.com/tianyajuanke/archive/2012/04/25/2470002.html
 
 //ubuntu设置主机名
 hostnamectl set-hostname ubuntu
+
+//ubuntu安装微信
+https://github.com/geeeeeeeeek/electronic-wechat/releases
+下载.tar.gz 解压
+:tar -xzvf linux-x64.tar.gz 
+ cd electronic-wechat-linux-x64/
+ ./electronic-wechat 
+
+
+
