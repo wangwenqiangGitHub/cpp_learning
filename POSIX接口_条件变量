@@ -14,6 +14,8 @@ pthread_cond_signal()发送一个条件变量.
     attr 指向条件变量属性的指针,若为NULL则使用默认属性值
     函数返回值
     初始化成功会返回0, 参数无效会返回EINVAL.
+    还可以用宏PTHREAD_COND_INITIALIZER静态初始化一个条件变量，方法：pthread_cond_t cond = PTHREAD_COND_INITIALIZER（结构体常量），等同于调用
+pthread_cond_init()时attr指定为NULL。attr一般设置NULL使用默认值即可，具体会在线程高级编程一章介绍。
     
     还可以用宏PTHREAD_COND_INITIALIZER静态初始化一个条件变量，方法：pthread_cond_t cond = PTHREAD_COND_INITIALIZER（结构体常量），等同于调用
 pthread_cond_init()时attr指定为NULL。attr一般设置NULL使用默认值即可，具体会在线程高级编程一章介绍。
