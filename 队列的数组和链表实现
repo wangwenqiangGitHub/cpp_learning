@@ -1,4 +1,4 @@
-https://blog.csdn.net/u011608357/article/details/18980873
+原文链接:https://blog.csdn.net/u011608357/article/details/18980873
 队列是先入先出数据结构, 他的实现可以是数组也可以使用链表, 使用数组实现链表时, 需要预先分配数组的大小, 用front和rear下标来分别表示队头队尾元素下标, 
 插入一个元素时, 使队尾的下标rear加1, 删除一个元素时, front下标加1, 判断是否为空的队列只要判断front和rear是否相等.
 
@@ -73,5 +73,87 @@ return p->q[p->front++];
 2 链表实现队列
 用链表实现队列，需要定义节点结构体存储节点的值和指针，另外还要定义头指针和尾指针，分别指向队头和队尾，插入元素的操作可以表示为
 
+#include<stdio.h>
+#include<stdlib.h>
+
+structure node
+{
+	int num;
+	node *next;
+};
+typedef struct
+{
+	node *front;
+	node *rear;
+}link;
+
+int main()
+{
+	void initialqueue(link p);
+	link push(link, int);
+	int pop(link);
+	int isempty(link);
+	int isfull(link);
+	link p={0,0};
+	initialqueue(p);
+	p = push(p, 1);
+	p = push(p, 2);
+	p=push(p,3);
+	printf("%d\n",pop(p));
+	system("pause");
+	return 0;
+
+}
+
+void initialqueue(link p)
+{
+p.front=p.rear=0;
+}
+int isempty(link p)
+{
+	return p.front==NULL&&p.rear==NULL;
+}
+ 
+link push(link p,int x)
+{
+	node *t=(node *)malloc(sizeof(node));
+	t->num=x;
+	t->next=NULL;
+if(isempty(p))
+{
+	p.front=p.rear=t;	
+}
+else
+{
+	p.rear->next=t;	
+	p.rear=t;
+}
+return p;
+}
+ 
+int pop(link p)
+{
+	int temp;
+	node *t;
+if(isempty(p))
+{
+printf("queue is empty\n");
+exit(-1);
+}
+if(p.front!=p.rear){
+temp=p.front->num;
+t=p.front;
+p.front=p.front->next;
+free(t);
+}
+else
+{
+temp=p.front->num;
+t=p.front;
+p.front=p.rear=NULL;
+free(t);
+}
+return temp;
+}
 
 
