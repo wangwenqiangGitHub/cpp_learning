@@ -1,0 +1,77 @@
+https://blog.csdn.net/u011608357/article/details/18980873
+队列是先入先出数据结构, 他的实现可以是数组也可以使用链表, 使用数组实现链表时, 需要预先分配数组的大小, 用front和rear下标来分别表示队头队尾元素下标, 
+插入一个元素时, 使队尾的下标rear加1, 删除一个元素时, front下标加1, 判断是否为空的队列只要判断front和rear是否相等.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+#define Maxsize 100
+
+structure queue
+{
+  int front;
+  int rear;
+  int q[Maxsize];
+}
+
+int main()
+{
+  void initialqueue(queue*);
+  void push(queue *, int);
+  int pop(queue*);
+  int isempty(queue*);
+  int isfull(queue*);
+  queue p;
+  initialqueue(&p);
+  push(&p, 1);
+  push(&p,2);
+	push(&p,3);
+  printf("%d\n",isempty(&p));
+	printf("%d\n",pop(&p));
+  
+  return 0;
+}
+
+void initialqueue(queue *p)
+{
+	p->front=p->rear=0;
+}
+
+int isfull(queue *p)
+{
+	return p->rear==p->front+Maxsize-1;
+}
+
+int isempty(queue *p)
+{
+	return p->front==p->rear;
+}
+
+void push(queue* p,int x)
+{
+if(isfull(p))
+{
+	printf("queue is full\n");
+	exit(-1);
+}
+p->q[p->rear++]=x;
+}
+
+
+int pop(queue *p)
+{
+if(isempty(p))
+{
+printf("queue is empty\n");
+exit(-1);
+}
+return p->q[p->front++];
+ 
+}
+
+
+2 链表实现队列
+用链表实现队列，需要定义节点结构体存储节点的值和指针，另外还要定义头指针和尾指针，分别指向队头和队尾，插入元素的操作可以表示为
+
+
+
