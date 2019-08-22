@@ -1,0 +1,63 @@
+    条件变量就是一个信号量,用于线程同步.条件变量用来阻塞一个线程,当条件满足时, 向阻塞的线程发送一个条件, 阻塞线程就被唤醒, 条件变量需要和互斥锁配合使用,
+互斥锁用来保护共享的数据.
+    条件变量可以用来通知共享的数据状态.比如一个处理共享资源队列的线程发现队列为空,则此线程只能等待, 直到有一个节点被添加到队列中, 添加后发一个条件变量信号激活等待线程.
+    条件变量的操作主要包括:调用pthread_cond_init()对条件变量初始化,调用pthread_cond_destroy()销毁一个条件变量,调用pthread_cond_wait()等待一个条件变量,调用
+pthread_cond_signal()发送一个条件变量.
+    条件控制块:
+每一个条件变量对应一个条件变量控制块,包括对条件变量进行操作的一些信息.初始化一个条件变量前需要先定义一个pthread_cond_t条件变量控制块. pthread_cond_t是pthread_cond结构体
+类型的重定义,定义在pthread.h头文件中.
+    
+    初始化条件变量:
+    int pthread_cond_init(pthread_cond_t *cond, const pthread_condattr_t *attr);
+    参数:
+    cond 条件变量句柄,不能为空
+    attr 指向条件变量属性的指针,若为NULL则使用默认属性值
+    函数返回值
+    初始化成功会返回0, 参数无效会返回EINVAL.
+    
+    还可以用宏PTHREAD_COND_INITIALIZER静态初始化一个条件变量，方法：pthread_cond_t cond = PTHREAD_COND_INITIALIZER（结构体常量），等同于调用
+pthread_cond_init()时attr指定为NULL。attr一般设置NULL使用默认值即可，具体会在线程高级编程一章介绍。
+    
+    销毁条件变量:
+    int pthread_cond_destroy(pthread_cond_t *cond);
+    参数:
+    cond 条件变量句柄, 不能为空.
+    函数返回
+    销毁成功返回0.参数无效返回EIVAL, 条件变量正在被使用返回EBUSY.
+    
+    
+    阻塞方式获取条件变量
+    int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
+    cond 条件变量句柄, 不能为空NULL
+    mutex 指向互斥锁控制块的指针,不能为NULL.
+    说明:此函数会以阻塞方式获取cond条件变量。线程等待条件变量前需要先将mutex互斥锁锁住，此函数首先判断条件变量是否可用，如果不可用则初始化一个条件变量，之后解锁
+mutex互斥锁，然后尝试获取一个信号量，当信号量值大于零时，表明信号量可用，线程将获得信号量，也就获得该条件变量，相应的信号量值会减1。如果信号量的值等于零，表明
+信号量不可用，线程将阻塞直到信号量可用，之后将对mutex互斥锁再次上锁。
+    
+    int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex, const struct timespec *abstime);
+    cond 条件变量句柄，不能为NULL
+    mutex 指向互斥锁控制块的指针，不能为NULL
+    abstime 指定的等待时间，单位是操作系统时钟节拍（OS Tick）
+    
+    成功获取条件变量返回0，参数无效返回EINVAL，超时返回ETIMEDOUT。
+此函数和pthread_cond_wait()函数唯一的差别在于，如果条件变量不可用，线程将被阻
+塞abstime时长，超时后函数将直接返回ETIMEDOUT错误码，线程将会被唤醒进入就绪态。
+    
+    int pthread_cond_signal(pthread_cond_t *cond);
+    只返回0，总是成功。
+此函数会发送一个信号且只唤醒一个等待cond条件变量的线程，是对rt_sem_release()函数的封装，也就是发送一个信号量。当信号量的值等于零，并且有线程等待这个信号量
+时，将唤醒等待在该信号量线程队列中的第一个线程，由它获取信号量。否则将把信号量的值加1。
+
+   int pthread_cond_broadcast(pthread_cond_t *cond);
+   广播成功返回0，参数无效返回EINVAL。
+调用此函数将唤醒所有等待cond条件变量的线程。
+
+条件变量代码:
+这个程序是一个生产者消费者模型,有一个生产者线程, 一个消费者线程, 它们拥有一个相同的优先级. 生产者每隔2秒会生产一个数字,放在head指向的链表里面,之后调用
+pthread_cond_signal()给消费者线程发信号,通知消费者线程链表里面的数据. 消费者线程会调用pthread_cond_wait()等待生产者线程发送信号.
+
+#inlcude<pthread.h>
+#incldue<unistd.h>
+#include<stdlib.h>
+
+
