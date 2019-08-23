@@ -37,6 +37,21 @@ https://blog.csdn.net/xsfqh/article/details/88981508
 mqtt学习
 
 https://www.ibm.com/developerworks/cn/iot/iot-mqtt-why-good-for-iot/index.html
+参考:paho mqtt的库学习
+
+坑:
+https://www.jianshu.com/p/1717f45394b0
+
+关于will遗嘱消息:
+按照paho的库设置后, 还有问题, 需要断开: MQTTClient_disconnect(client, 10000);
+
+client iD:mqtt服务器发生抢占时, 进行修改
+keepAliveInterval:mqtt连接关键字, 是进行mqtt的连接
+
+
+
+
+
 
 
 用TLS/SSL保证EMQ的网络传输安全:
