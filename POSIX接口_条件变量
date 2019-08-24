@@ -93,3 +93,81 @@ struct node
 };
 
 
+struct node* head = NULL;/*链表头是共享资源 */
+
+/*消费者线程入口*/
+static void* consumer(void* parameter)
+{
+    struct node* p_node = NULL;
+    
+    pthread_mutex_lock(&mutex);/*对互斥锁上锁*/
+    while(1)
+    {
+        while(head == NULL)    /*判断链表里是否有元素*/
+        {
+            pthread_cond_wait(&cond, &mutex);  /*尝试获取条件变量*/
+        }
+        /*
+        pthread_cond_wait()会先对mutex解锁，然后阻塞在等待队列，直到获取条件变量被唤醒，被唤醒后，该线程再次对mutex上锁，成功进入临界区
+        */
+        
+        p_node = head; /*拿到资源 */
+        head = head->n_next; /*头指针指向下一个资源*/
+        /*打印输出*/
+        printf("consume %d\n", p_node->n_number);
+        
+        free(p_node);/*拿到资源后释放节点所占用的内存*/
+        
+    }
+    pthread_mutex_unlock(&mutex);   /*释放互斥锁*/
+    return 0；
+    }
+    
+}
+
+/*生产者入口*/
+static void * product（void * parameter）
+{
+    int count = 0;
+    struct node *p_node;
+    while(1)
+    {
+        /*动态分配内存*/
+        p_node = （struct node*）malloc(sizeof(struct node));
+        if (p_node != NULL)
+        {
+            p_node->n_number = count++;
+            pthread_mutex_lock(&mutex);  /*需要操作head这个临界资源， 先加锁*/
+                        
+            p_node->n_next = head;
+            head = p_node;  /*往链表头插入数据*/
+            
+            pthread_mutex_unlock(&mutex);/*解锁*/
+            printf("product %d\n", p_node->n_number);
+            
+            pthread_cond_signal(&cond); /*发信号唤醒一个线程*/
+            sleep(2)；
+        }
+        else
+        {
+            printf("product malloc node failed!\n");
+            break;
+        }
+    }
+}
+
+/*用户应用入口*/
+
+int rt_applicaion_init()
+{
+    int result;
+    
+    /*创建生产者线程。 属性为默认值， 入口函数是product， 入口参数为NULL*/
+    result = pthread_create(&tid1, NULL, product, NULL);
+    check_result("product thread create", result);
+    
+    /*创建消费者线程，属性为默认值， 入口函数为consumer，入口参数为NULL*/
+    result = pthread_create(&tid2, NULL,consumer, NULL);
+    check_result("consumer thread created", result);
+    return 0;
+}
