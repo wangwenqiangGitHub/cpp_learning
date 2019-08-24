@@ -62,4 +62,34 @@ pthread_cond_signal()给消费者线程发信号,通知消费者线程链表里�
 #incldue<unistd.h>
 #include<stdlib.h>
 
+/*静态方式初始化一个互斥锁和一个条件变量*/
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
+/*指向线程控制块的指针*/
+static pthread_t tid1;
+static pthread_t tid2;
+
+/*函数返回值检查*/
+static void check_result(char* str, int result)
+{
+    if(0 == result)
+    {
+        printf("%s sucessfully!\n",str);
+        
+    }
+    else
+    {
+        printf("%s faild!\n",str, result);
+    }
+}
+
+/*生产者生产的结构体数据，存放在链表里*/
+
+struct node
+{
+    int n_number;
+    struct node* n_next;
+};
+
 
