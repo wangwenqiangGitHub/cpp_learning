@@ -1,0 +1,36 @@
+https://blog.csdn.net/yusiguyuan/article/details/25417383
+
+1 define中的三个特殊符号：#，##，#@:
+#define Conn(x,y) x##y  //int n = Conn(123,456); /* 结果就是n=123456;*/
+#define ToChar(x) #@x   //char a = ToChar(1);结果就是a='1';
+#define ToString(x) #x  //char* str = Conn("asdf", "adf"); /*结果就是 str = "asdfadf";*/  
+
+
+2 防止头文件被重复包含:
+#ifndef BODYDEF_H 
+#define BODYDEF_H 
+ //头文件内容 
+
+#endif
+
+3 得到指定地址上的一个字节或字:
+#define MEM_B( x ) ( *( (byte *) (x) ) ) 
+#define MEM_W( x ) ( *( (word *) (x) ) )
+
+#include <iostream>
+#include <windows.h>
+
+#define MEM_B(x) (*((byte*)(x)))
+#define MEM_W(x) (*((WORD*)(x)))
+
+int main()
+{
+    int bTest = 0x123456;
+
+    byte m = MEM_B((&bTest));/*m=0x56*/
+    int n = MEM_W((&bTest));/*n=0x3456*/
+
+    return 0;
+}
+
+4 
