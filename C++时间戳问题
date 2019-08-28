@@ -126,6 +126,6 @@ C++对字符串清零.
  ackContent.clear();
  
  ros中的时间戳函数:
- string timestamp = std::to_string(ros::Time::now().toNsec()/1000000);
+ string timestamp = std::to_string(ros::Time::now().toNSec()/1000000);
  
  ackContent.clear();
