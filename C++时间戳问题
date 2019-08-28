@@ -107,3 +107,25 @@ printf中输出的类型:
        printf("%s\n",ss.c_str());
        return 0;
   }          
+
+
+整理好的时间戳:
+static std::string timestampFuction()
+{
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    std::stringstream systemTime;
+    systemTime << time.tv_sec;
+    systemTime << time.tv_usec/1000;
+    std::string timestamp = systemTime.str();
+    return timestamp;
+}
+
+C++对字符串清零.
+ std::string ackContent;
+ ackContent.clear();
+ 
+ ros中的时间戳函数:
+ string timestamp = std::to_string(ros::Time::now().toNsec()/1000000);
+ 
+ ackContent.clear();
