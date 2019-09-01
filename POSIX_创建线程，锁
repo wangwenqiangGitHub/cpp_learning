@@ -1,0 +1,13 @@
+pthread_t 线程句柄
+pthread_mutex_t 线程锁句柄
+
+使用锁，首先初始化
+pthread_mutex_init(&线程锁句柄，null);
+
+上锁：pthread_mutex_lock(&线程锁)
+进行链表/队列/vector的一些操作
+解锁：pthread_mutex_unlock(&线程锁)
+
+创建线程：
+int ret = pthread_create(线程句柄, 线程属性（默认null）,线程运行函数的起始地址，运行函数的参数)；成功返回：0；失败返回-1；
+
