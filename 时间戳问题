@@ -129,3 +129,33 @@ C++对字符串清零.
  string timestamp = std::to_string(ros::Time::now().toNSec()/1000000);
  
  ackContent.clear();
+
+
+数组转换为string
+
+解1：首地址复制
+string a;
+char stringarray[100];
+stringarray="changestring";
+a=stringarray;
+解2：元素按位赋值
+string a;
+char stringarray[100];
+stringarray="changestring";
+int i=0;
+while(stringarray[i]!='\0'){
+a[i]=stringarray[i];
+i++;
+}
+a[i]='\0';
+解3：根据string的连接特性，粘合性
+string a;
+char stringarray[100];
+stringarray="changestring";
+a="";
+int i=0;
+while(stringarray[i]!='\0'){
+a+=stringarray[i];//或用a,append(stringarray[i]);
+i++;
+}
+a[i]='\0';
