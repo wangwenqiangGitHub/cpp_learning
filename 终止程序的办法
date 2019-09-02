@@ -1,0 +1,14 @@
+#include <signal.h> // linux signal head file 
+//crtl+c singal 
+   
+static void signal_handler(int sig)
+{
+    ros::shutdown();
+}
+
+   
+ void  main()
+   {
+   signal(SIGINT,signal_handler);
+}
+
