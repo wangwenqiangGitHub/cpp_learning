@@ -159,3 +159,27 @@ a+=stringarray[i];//或用a,append(stringarray[i]);
 i++;
 }
 a[i]='\0';
+
+
+
+解决时间戳输出12位问题
+ using namespace std;                                                                                                 
+ static char buf_temp[256];
+ std::string timestampFuction()
+ {
+     char buf_temp[256];
+     struct timeval time;
+     unsigned long ul_ms;
+    gettimeofday(&time, NULL);
+   //std::stringstream sss;
+   //sss << time.tv_sec;
+   //sss << time.tv_usec/1000;
+     memset(buf_temp, sizeof(buf_temp),0x00);
+     ul_ms = time.tv_sec * 1000 + time.tv_usec/1000;
+
+      sprintf(buf_temp, "%ld",ul_ms);
+   // sprintf(buf_temp, "%ld%ld",time.tv_sec, time.tv_usec/1000);
+   // std::string a = sss.str();
+     std::string a = buf_temp;
+     return a;
+  }
