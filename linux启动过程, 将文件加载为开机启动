@@ -1,0 +1,7 @@
+找到rcS.d/;先执行这个文件
+再执行rc0.d;-----rc6.d
+然后执行rc.local.在rc.local中执行后台运行的程序
+
+cpu加载
+main.c---------生成-----------cpu_detect
+/nvidia/...../cpu_detect  & 后台运行
