@@ -3,3 +3,5 @@ tcp client
 bzero ( s , 20 );        //
 功能：置字节字符串s的前n个字节为零。
 
+epoll事件触发:
+https://blog.csdn.net/yusiguyuan/article/details/15027821
