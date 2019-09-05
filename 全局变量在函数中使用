@@ -1,0 +1,19 @@
+全局变量在函数中使用, 应在内部定义一个局部变量, 来对这个局部变量进行操作,防止出现对这个变量赋值,而这个值为指针, 出现报错问题:segmentation fault(core dumped)
+
+例如
+static MQTTClient_message publishMessage;
+
+int publish(std::string topic, std::string msg, int qos)
+{
+    MQTTClient_message mqttPublishMessage = publishMessage;  //如果不加这个就会报错
+
+    mqttPublishMessage .payload = (void *)msg.c_str();
+    mqttPublishMessage.payloadlen = strlen(msg.c_str());
+    mqttPublishMessage.qos = qos;
+    mqttPublishMessage.retained = 0;
+
+    return MQTTClient_publishMessage(client,
+                                     topic.c_str(),
+                                     &mqttPublishMessage,
+                                     &deliveryToken);
+}
