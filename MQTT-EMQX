@@ -175,3 +175,285 @@ static void *mqtt_subscribe_message_thread_entry(void *param)
 
     pthread_exit(0);
 }
+static void mqtt_subscribe_message_handle(struct mqtt_subscribe_message *msg)
+{
+    printf("+++++++++++++ subscribe message from iot ++++++++++++\n");
+    printf("Topic: %s\n", msg->topic.c_str());
+    printf("Message: %s\n", msg->payload.c_str());
+    printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("Topic: %s\n", msg->topic.c_str());
+    /* actual business */
+    if (0 == strcmp(msg->topic.c_str(), CONNECT_DEVICEID_TASK))
+    {
+        /* receive message from ""connect/Dev001/task"" topic */
+
+        /* parse json contained map or task data , or both */
+        Json::Reader reader;
+        Json::Value root;
+
+        if (reader.parse(msg->payload, root) && root.isObject())
+        {
+            printf("Parse json success.\n");
+
+            if (root["MsgID"].isString())
+            {
+                /* ack to connect/dispatch/task-ack topic , whether MsgID repeated or not */
+                // std::string ackContent = CommunicateUtil::deviceDeviceIdTaskAckData(root["MsgID"].asString(),
+                //                                                                        0,
+                //                                                                        1,
+                //                                                                        "",
+                //                                                                        "15323456890");
+                // publish(DEVICE_DEVICEID_CONNECT_TASK_ACK, ackContent,QOS_0);
+                std::string ackTimestamp = std::to_string(ros::Time::now().toNSec()/1000000);
+                std::string ackContent = CommunicateUtil::deviceDeviceIdTaskAckData(root["MsgID"].asString(),
+                                                                                    1,
+                                                                                    1,
+                                                                                    "",
+                                                                                    ackTimestamp);
+                publish(DEVICE_DEVICEID_CONNECT_TASK_ACK, ackContent, QOS_0);
+             //   printf("Ack for had sent task data to agv_task_control.\n");
+                printf("Ack for receive an exist MsgID.\n");
+
+                /* repeated MsgID will not work for generate map and agv_task_control */
+                if (lastMessageId != root["MsgID"].asString())
+                {
+                    lastMessageId = root["MsgID"].asString();
+
+                    /* if MapData is exist , generate pgm and yaml first */
+                    if (root["MapData"]["PgmData"].isObject())
+                    {
+                        std::string mapJsonString = root["MapData"]["PgmData"].toStyledString();
+                        printf("MapData: \n");
+                        printf("%s\n", mapJsonString.c_str());
+
+                        /* generate pgm and yaml */
+                        ConverUtil::generatePgmAndYaml(MAP_SAVE_NAME,
+                                                       MAP_YAML_SAVE_NAME,
+                                                       mapJsonString.c_str(),
+                                                       MAP_RESOLUTION);
+                    }
+
+                    /* get TaskData , interact with agv_task_control */
+                    if (root["TaskData"].isObject())
+                    {
+                        printf("TaskData: \n");
+                        std::string taskJsonString = root["TaskData"].toStyledString();
+                        printf("%s\n", taskJsonString.c_str());
+
+                        /* send task data to agv_task_control */
+                        std_msgs::String taskData;
+                        taskData.data = taskJsonString;
+                        printf("Send route path data to topic: %s\n", ROS_PUB_TOPIC_ROUTE_DATA);
+                        TaskControlCommunicate::routePathPublish(taskData);
+
+                        /* ack to connect/dispatch/task-ack topic with task data had sent to agv_task_control */
+                        //ackContent.clear();
+
+                    }
+
+                    /*taskInstructionAction值 2：stop task 3：go on task  4：kill task*/
+                    if (root["Action"].isObject())
+                    {
+                        printf("task Action: \n");
+                        std::string taskInstructionActionJsonString = root["Action"].toStyledString();
+                        printf("%s\n", taskInstructionActionJsonString.c_str());
+
+                        /*send  task action to agv_task_control*/
+                        std_msgs::String taskInstructionAction;
+                        taskInstructionAction.data = taskInstructionActionJsonString;
+                        TaskControlCommunicate::taskInstructionPublish(taskInstructionAction);
+
+                        printf("Ack for had sent task data to agv_task_control.\n");
+                    }
+                }
+                else
+                {
+                    printf("MsgID is equal to last MsgID , message had sent to agv_task_control.\n");
+                }
+            }
+            else
+            {
+                printf("MsgID isn't string.\n");
+            }
+        }
+        else
+        {
+            printf("Parse json failed.\n");
+        }
+    }
+    // else if (0 == strcmp(topicName, CONNECT_DEVICEID_DEVICE_ACK))
+    // {
+    //     /* TODO: receive message from "connect/Dev001/device-ack" topic */
+    //     /* ... */
+    // }
+    else if (0 == strcmp(msg->topic.c_str(), CONNECT_DEVICEID_CONTROL))
+    {
+        /*TODO: receive message from "connect/"DEVICE_ID"/control" topic */
+      
+        Json::Reader reader;
+        Json::Value root;
+
+        if (reader.parse(msg->payload, root) && root.isObject())
+        {
+            printf("Parse json success.\n");
+
+            if (root["MsgID"].isString())
+            {
+                /* repeated MsgID will not work for generate map and agv_task_control */
+                if (lastMessageId != root["MsgID"].asString())
+                {
+                    lastMessageId = root["MsgID"].asString();
+
+   
+                    /*send TaskInstruction to agv task control*/
+                    if (root["Instruct"].isObject())
+                    {
+                        printf("Control instruct: \n");
+                        std::string controlInstructionJsonString = root["Instruct"].toStyledString();
+                        printf("%s\n", controlInstructionJsonString.c_str());
+
+                        /*send  task instruction to agv_task_control*/
+                        std_msgs::String controlInstruction;
+                        controlInstruction.data = controlInstructionJsonString;
+                        TaskControlCommunicate::controlInstructionPublish(controlInstruction);
+                        //ackContent.clear();
+                        std::string ackTimestamp = std::to_string(ros::Time::now().toNSec()/1000000);
+                        std::string ackContent = CommunicateUtil::deviceDeviceIdControlAckData(root["MsgID"].asString(),
+                                                                                       1,
+                                                                                       1,
+                                                                                       "",
+                                                                                       ackTimestamp);
+                        publish(DEVICE_DEVICEID_CONNECT_CONTROL_ACK, ackContent,QOS_0);
+                        printf("Ack for had sent task data to agv_task_control.\n");
+                    }
+                }
+                else
+                {
+                    printf("MsgID is equal to last MsgID , message had sent to agv_task_control.\n");
+                }
+            }
+            else
+            {
+                printf("MsgID isn't string.\n");
+            }
+        }
+        else
+        {
+            printf("Parse json failed.\n");
+        }
+    }
+    else if (0 == strcmp(msg->topic.c_str(), CONNECT_DEVICEID_CONF))
+    {
+        /*TODO: receive message from "connect/"DEVICE_ID"/conf" topic */
+        /* code */
+        /* parse json config data , or both */
+        Json::Reader reader;
+        Json::Value root;
+
+        if (reader.parse(msg->payload, root) && root.isObject())
+        {
+            printf("Parse json success.\n");
+
+            if (root["MsgID"].isString())
+            {
+                 /* repeated MsgID will not work for agv_task_control */
+                if (lastMessageId != root["MsgID"].asString())
+                {
+                    lastMessageId = root["MsgID"].asString();
+
+                    /* get configData , interact with agv_task_control */
+                    if (root["configData"].isObject())
+                    {
+                        printf("configData: \n");
+                        std::string confJsonString = root["configData"].toStyledString();
+                        printf("%s\n", confJsonString.c_str());
+
+                        /* send confData to agv_task_control */
+                        std_msgs::String confData;
+                        confData.data = confJsonString;
+                        printf("Send route path data to topic: %s\n", ROS_PUB_TOPIC_ROUTE_DATA);
+                        TaskControlCommunicate::confPublish(confData);
+
+                        /* ack to bim with confData  had sent to agv_task_control */
+                        //ackContent.clear();
+                        std::string ackTimestamp = std::to_string(ros::Time::now().toNSec()/1000000);
+                        std::string ackContent = CommunicateUtil::deviceDeviceIdConfAckData(root["MsgID"].asString(),
+                                                                                            1,
+                                                                                            1,
+                                                                                            "",
+                                                                                           ackTimestamp);
+                        publish(DEVICE_DEVICEID_CONNECT_CONF_ACK, ackContent, QOS_0);
+                        printf("Ack for had sent task data to agv_task_control.\n");
+                    }
+
+                }
+                else
+                {
+                    printf("MsgID is equal to last MsgID , message had sent to agv_task_control.\n");
+                }
+            }
+            else
+            {
+                printf("MsgID isn't string.\n");
+            }
+        }
+        else
+        {
+            printf("Parse json failed.\n");
+        }
+ 
+    }
+    else if (0 == strcmp(msg->topic.c_str(), CONNECT_DEVICEID_SWITCH))
+    {
+        /*TODO: receive message from "connect/"DEVICE_ID"/conf" topic */
+        /* parse json config data , or both */
+        Json::Reader reader;
+        Json::Value root;
+
+        if (reader.parse(msg->payload, root) && root.isObject())
+        {
+            printf("Parse json success.\n");
+
+            if (root["MsgID"].isString())
+            {
+                /* repeated MsgID will not work for agv_task_control */
+                if (lastMessageId != root["MsgID"].asString())
+                {
+                    lastMessageId = root["MsgID"].asString();
+
+                    /* get TaskData , interact with agv_task_control */
+                    if (root["Action"].isObject())
+                    {
+                        printf("switch action: \n");
+                        std::string actionJsonString = root["Action"].toStyledString();
+                        printf("%s\n", actionJsonString.c_str());
+
+                        /* send switch data to agv_task_control ,switchInstructData value 10：关机 11：开机*/
+                        std_msgs::String switchActionData;
+                        switchActionData.data = actionJsonString;
+                        printf("Send route path data to topic: %s\n", ROS_SUB_TOPIC_DEVICE_INFO_SWITCH_STATE);
+                        TaskControlCommunicate::switchInstructDataPublish(switchActionData);
+
+                        printf("Ack for had sent switch instruct data to agv_task_control.\n");
+                    }
+                }
+                else
+                {
+                    printf("MsgID is equal to last MsgID , message had sent to agv_task_control.\n");
+                }
+            }
+            else
+            {
+                printf("MsgID isn't string.\n");
+            }
+        }
+        else
+        {
+            printf("Parse json failed.\n");
+        }
+    }
+    else
+    {
+        printf("Unsupported topic name.\n");
+    }
+}
