@@ -83,3 +83,95 @@ https://www.jianshu.com/p/ebbe25d1c4b2?tdsourcetag=s_pctim_aiomsg
   
   https://www.jianshu.com/p/511cc22fa700
   https://www.jianshu.com/p/448f566d3ff0
+7.DLLExport int MQTTClient_waitForCompletion (
+           MQTTClient handle,
+           MQTTClient_deliveryToken dt,
+           unsigned long timeout
+)
+客户端应用程序调用此函数来将主线程的执行与消息的完成发布同步。 被调用时，MQTTClient_waitForCompletion()阻塞执行，
+直到消息成功传递或已超过指定的时间。
+
+参数	含义
+handle	指向MQTT客户端句柄的指针。句柄被成功从函数中返回的客户端引用所填充
+dt	代表消息的MQTTClient_deliveryToken用来检测是否成功传递。传递token由发布函数MQTTClient_publish () 和 MQTTClient_publishMessage ()所产生。
+timeout	等待的最大毫秒数。
+返回值：
+消息成功传递则返回MQTTCLIENT_SUCCESS(0) ，如果时间已过期或检测token时出问题，则返回错误码。
+
+8.
+struct mqtt_subscribe_message
+{
+   std::string topic;
+   std::string payload;
+};
+
+messageArrived()
+{
+  //增加链表消息
+   struct mqtt_subscribe_message msg;
+    char *messageContent;
+
+    msg.topic = "";
+    int len = strlen(topicName);
+    for (int i = 0; i < len; i++)
+    {
+        msg.topic += *topicName;
+        topicName++;
+    }
+
+    printf("this is a test+++++++++++++++++%s\n", msg.topic);
+    /* translate char message to string */
+    messageContent = (char *)message->payload;
+
+    msg.payload = "";
+    for (int i = 0; i < message->payloadlen; i++)
+    {
+        msg.payload += *messageContent;
+        messageContent++;
+    }
+
+    pthread_mutex_lock(&mqtt_subscribe_msg_list_lock);
+    mqtt_subscribe_msg_list.push_back(msg);
+    pthread_mutex_unlock(&mqtt_subscribe_msg_list_lock);
+
+    MQTTClient_freeMessage(&message);
+    MQTTClient_free(topicName);
+   
+    return 1;
+}
+
+void ()
+{
+   pthread_mutex_init(&mqtt_subscribe_msg_list_lock, NULL);
+    mqtt_subscribe_msg_thread_exit = 0;
+
+    int err = pthread_create(&mqtt_subscribe_msg_tid, NULL, &mqtt_subscribe_message_thread_entry, NULL);
+    if (err != 0)
+        printf("can't create mqtt subscribe message handle thread: %s\n", strerror(err));
+}
+
+static void *mqtt_subscribe_message_thread_entry(void *param)
+{
+    struct mqtt_subscribe_message msg;
+
+    while (!mqtt_subscribe_msg_thread_exit) {
+        pthread_mutex_lock(&mqtt_subscribe_msg_list_lock);
+        if (mqtt_subscribe_msg_list.empty()) {
+            pthread_mutex_unlock(&mqtt_subscribe_msg_list_lock);
+            usleep(100000);
+            continue;
+        }
+
+        struct mqtt_subscribe_message tmp_msg = mqtt_subscribe_msg_list.front();
+        msg.topic = tmp_msg.topic;
+        msg.payload = tmp_msg.payload;
+
+        mqtt_subscribe_msg_list.pop_front();
+        pthread_mutex_unlock(&mqtt_subscribe_msg_list_lock);
+
+        mqtt_subscribe_message_handle(&msg);
+        //usleep(10000);
+    }
+
+    pthread_exit(0);
+}
