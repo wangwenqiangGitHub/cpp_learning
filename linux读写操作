@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+
+static char *handle_name = "CPU num, cpu used, mem used, disk used\n";
+
+char file_path[128] = {0};
+    int ret = GetFileName(file_path,sizeof(file_path));
+    if(ret < 0)
+    {
+        printf("<%s,%d> get filename err.\n", __func__, __LINE__);
+        return -1;
+    }
+ 
+int fd = open(file_path, O_RDWR|O_CREAT);
+ 
+write(fd, handle_name, strlen(handle_name));
+
+
+sprintf(buf, "%d, %f4.2, %f4.2, %s\n",cpu_num, g_cpu_ysed, using, used);
+write(fd, buf, strlen(buf));
+
+
+int GetFileName(char *file_path,int max_path_len)
+{
+    int cnt = 0;
+    system("mkdir -p /home/nvidia/cpu_info_log \n");
+    while(1)
+    {
+        if(cnt > 10000)
+        {
+            printf("<%s,%d> Too many filepath \n", __func__, __LINE__);
+            return -1;
+        }
+        memset(file_path, 0, sizeof(max_path_len));
+        sprintf(file_path, "/home/nvidia/cpu_info_log/cpu_info_%d.csv", cnt++);
+        if(0 == access(file_path, F_OK))
+        {
+            continue;
+        } else {
+            printf("<%s,%d> get filename[%s]\n", __func__, __LINE__, file_path);
+            break;
+        }   
+    }
+    return 0;
+}
+
+
+close(fd)
