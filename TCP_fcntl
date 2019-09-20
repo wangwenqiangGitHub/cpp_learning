@@ -1,0 +1,21 @@
+https://blog.csdn.net/martin_liang/article/details/8363251
+
+https://www.jianshu.com/p/0b4fc5b3e89f
+
+获取文件的flags，即open函数的第二个参数:
+int flags = fcntl( sockfd, F_GETFL, 0 );
+
+2、设置文件的flags:
+
+      fcntl(fd,F_SETFL,flags);
+
+3、增加文件的某个flags，比如文件是阻塞的，想设置成非阻塞:
+
+       flags = fcntl(fd,F_GETFL,0);
+
+       flags |= O_NONBLOCK;
+
+      fcntl(fd,F_SETFL,flags);
+
+tcp超时:
+https://blog.csdn.net/love_gaohz/article/details/43745065
