@@ -1,0 +1,19 @@
+Linux进程通信---共享内存 代码实现:https://blog.csdn.net/u010889616/article/details/48112945
+
+进程通信:
+管道(PIPE)
+FIFO(有名管道)
+XSI消息队列
+XSI信号量
+XSI共享内存
+POSIX信号量
+域套接字(Domain Socket)
+信号(Signal)
+互斥量(Mutex)
+
+线程同步:
+互斥量
+条件变量
+读写锁
+自旋锁
+barrier(这个不知道怎么翻译)
