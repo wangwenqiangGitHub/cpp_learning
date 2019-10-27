@@ -4,3 +4,5 @@ map是一种关联容器,它按照特定顺序存储由键值Key和映射值Valu
 一起,value_type是一个组合了两种类型的pair类型:typedef pair<const Key,T> value_type.
 
 https://www.jianshu.com/p/4ddc02a22c9b
+
+关于关于关联容器举例子：键值 小明   映射值 ：电话号码 qq wechat 
