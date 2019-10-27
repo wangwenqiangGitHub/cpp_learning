@@ -21,5 +21,7 @@ https://www.cnblogs.com/KunLunSu/p/7967428.html
   [=]以值的方式捕获所有的外部自动变量。
   []不捕获外部的任何变量。
   
+  params是lambda表示式的参数
+  
   std::bind可以用对象和参数一起进行绑定，且绑定后的结果可以使用std::function对象进行保存，并延迟到需要调用的时候。
   
