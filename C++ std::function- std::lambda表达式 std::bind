@@ -2,3 +2,24 @@
   包括：函数，函数指针，lambda表达式，bind创建的对象，重载了函数调用运算符的类。
   
   
+https://www.cnblogs.com/KunLunSu/p/7967428.html
+2.c++的lambda表达式的规范如下：
+  [capture] (params)mutable exception attribute->ret{body}
+  lambda表达式的完整形式。
+  
+  [capture](params){body}
+  省略返回值的lambda表达式。
+  
+  mutable修饰符说明lambda表达式体内的代码可以修饰被捕获的变量，并且可以访问被捕获的对象的non-const方法。
+  exception说明lambda表达式是否抛出异常（noexcept),以及抛出何种异常，类似于void f()
+  attribute用来声明属性
+  
+  capture指定了在可见域内lambda表达式的代码内可见得外部变量的列表，具体解释如下：
+  [a,&b]a变量以值的方式被捕获，b以引用的方式被捕获。
+  [this]以值的方式捕获this指针。
+  [&]以引用的方式捕获所有的外部自动变量
+  [=]以值的方式捕获所有的外部自动变量。
+  []不捕获外部的任何变量。
+  
+  std::bind可以用对象和参数一起进行绑定，且绑定后的结果可以使用std::function对象进行保存，并延迟到需要调用的时候。
+  
