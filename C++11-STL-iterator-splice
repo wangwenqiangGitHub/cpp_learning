@@ -1,0 +1,11 @@
+https://www.cnblogs.com/yc_sunniwell/archive/2010/06/25/1764934.html
+C++迭代器：iterator
+用于提供一种方法顺序访问一个聚合（STL C++）对象中各个元素，
+
+c++ vector: https://www.runoob.com/w3cnote/cpp-vector-container-analysis.html
+
+splice合并方法：https://www.cnblogs.com/songliquan/p/3308677.html
+splice()  合并两个list 　　
+　　　　void splice( iterator pos, list &lst );//把lst连接到pos的位置
+　　　　void splice( iterator pos, list &lst, iterator del );//插入lst中del所指元素到现链表的pos上
+　　　　void splice( iterator pos, list &lst, iterator start, iterator end );//用start和end指定范围。
