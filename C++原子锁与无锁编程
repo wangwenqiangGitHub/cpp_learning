@@ -2,3 +2,26 @@ https://zhuanlan.zhihu.com/p/24983412
 
 C++的default和delete
 https://www.cnblogs.com/lsgxeva/p/7787438.html
+
+class Mylock
+{
+    Mylock(void) = delete;
+    Myclock(const Myclock&) = delete;
+    Myclock& operator=(const Myclock&) = delete;
+    
+    std::atomic<bool>& _mutex;
+public:
+    Myclock(std::atomic<bool>& mutex) : _mutex(mutex)
+    {
+      while (_mutex.exchange(true))
+      {
+      }
+    }
+    ~Mylock(void)
+    {
+       _mutex.store(false);
+    }
+}
+
+
+
