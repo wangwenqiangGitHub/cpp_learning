@@ -1,0 +1,10 @@
+C++STL方法:
+http://c.biancheng.net/view/416.html
+vector<T>容器是包含T类型元素的序列容器,和array<T, N>容器相似,不同的是vector<T>容器的大小可以自动增长,从而可以包含任意数量的元素;
+只要元素超过vector当前容量,就会自动分配更多的空间,只能在容器尾部高效地删除和添加元素.
+
+定义一个vector, std::vector<double> values {20}; 定义一个元素以20为初始值, 默认是0.
+
+vector的成员函数front()和back()分别返回系列中的第一个和最后一个元素的引用,他们可以出现在赋值运算符的左边.
+
+vector 容器的迭代器是随机访问迭代器. vector有成员函数push_back(),所以能够用来使用back_insert_iterator来添加新的值.
