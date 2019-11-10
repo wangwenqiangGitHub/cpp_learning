@@ -1,3 +1,15 @@
+STL string常用方法:https://www.zhihu.com/search?type=content&q=stl%20string
 
-append()
-assign()
+append()赋值方法:
+
+assign()赋值常用方法
+
+=， assign : 赋予新值
+swap : 交换两个字符串的内容
++=，append()，push_back()，pop_back()： 添加字符/删除最后一个字符
+
++ ： 串联字符串
+max_size() : 返回字符的最大可能个数
+size(), length() ：返回字符数量
+data() : 将内容以字符数组的方式进行返回
+substr() ：返回字符子串
