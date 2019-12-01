@@ -1,0 +1,7 @@
+map: 地图坐标系,顾名思义,就是该坐标系为固定坐标系(fixed frame),一般与机器人所在的世界坐标系一致.
+base_link:机器人本体坐标系,与机器人中心重合,当然有机器人(PR2)是base_footprint
+odom:里程计坐标系,这里主要是区分odom topic,这两个概念,一个是坐标系,一个是根据编码器(或者视觉等)计算的里程计.但是两者也有关系, odom topic转化得位姿矩阵
+odom-->base_link的tf关系.疑问? odom和map坐标系是重合的? 机器人运动开始是重合的.但是,随着时间的推移是不重合的,而出现的偏差就是里程计的累积误差.那么
+map-->odom的tf怎么得到,就是在一些校正传感器合作校正的package比如gmapping会给出一个位置估计(location),这个可以得到map-->base_link的tf,所以估计位置和
+里程计位置的偏差也就是odom与map的坐标系偏差.所以,如果odom计算没有错误,那么map-->odom的tf就是0;
+base_laser:激光雷达的坐标系,与激光雷达的安装位置有关系,其与base_link的tf为固定的.
