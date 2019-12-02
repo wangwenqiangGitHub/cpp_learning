@@ -7,3 +7,5 @@ map-->odom的tf怎么得到,就是在一些校正传感器合作校正的package
 base_laser:激光雷达的坐标系,与激光雷达的安装位置有关系,其与base_link的tf为固定的.
 
 ros的kinetic版本导航包:navigation/robot_pose_ekf/文件夹介绍了:激光,视觉,轮式,IMU等传感器里程计发布odom.
+
+https://www.ncnynl.com/archives/201708/1886.html
