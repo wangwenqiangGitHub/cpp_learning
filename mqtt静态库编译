@@ -12,3 +12,7 @@
 -DCMAKE_C_COMPILER=xxx 表示指定交叉编译工具链的绝对路径。
 若编译linux版本的库只需 cmake .. 即可，无需指定编译工具路径。
 make 执行完成后，在build/src目录下即可找到编译生成的库文件，如下图所示
+
+
+静态库编译
+https://www.cnblogs.com/zjiaxing/p/5557629.html
