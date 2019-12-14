@@ -16,3 +16,29 @@ make 执行完成后，在build/src目录下即可找到编译生成的库文件
 
 静态库编译
 https://www.cnblogs.com/zjiaxing/p/5557629.html
+
+SSL问题:
+https://github.com/eclipse/paho.mqtt.c
+
+编译库时需要开启SSL,
+mkdir /tmp/build.paho
+cd /tmp/build.paho
+cmake -GNinja -DPAHO_WITH_SSL=TRUE -DPAHO_BUILD_DOCUMENTATION=TRUE -DPAHO_BUILD_SAMPLES=TRUE ~/git/org.eclipse.paho.mqtt.c
+-DPAHO_WITH_SSL=TRUE表示开启SSL功能.
+具体代码实现:
+全局:static MQTTClient_SSLOptions connectSSLOptions;
+
+conectOptions.ssl = &connectSSLOptions;
+connectSSLOptions= MQTTClient_SSLOptions_initializer;
+connectSSLOptions.trustStore = "/home/nvidia/mqtt_ca.pem";
+connectSSLOptions.verify = 0;
+
+打印log的.
+init()
+{
+  MQTTClient_setTraceCallback(trace_callback);
+  MQTTClient_setTraceLevel(level:MQTTCLIENT_TRACE_PROTOCOL);
+  ......
+  ......
+}
+上位机软件的使用
