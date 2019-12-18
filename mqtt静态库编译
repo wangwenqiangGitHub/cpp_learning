@@ -1,8 +1,30 @@
-下载工程源码:
+第一步:下载工程源码:
 #git clone https://github.com/eclipse/paho.mqtt.c.git
-创建build编译目录:
+
+第二步:创建build编译目录:
 # cd paho.mqtt.c
 # mkdir build
+
+第三步:生成编译环境编译mqttt库
+cmake -DPAHO_BUILD_STATIC=TRUE -DPAHO_WITH_SSL=TRUE -DCMAKE_INSTALL_PREFIX=../x86_64 ..
+make
+make install
+
+第四步:卸载清除掉
+make clean
+
+第五步:更改库文件后重新生成库:
+make install
+
+第六步:解释生成的库文件:
+生成的库文件在第三步创建的x86_64文件夹目录下:
+SSL加密的库:
+libpaho-mqtt3cs.a
+libpaho-mqtt3as.a
+非加密库:
+libpaho-mqtt3c.a
+libpaho-mqtt3a.a
+
 
 生成编译环境编译mqttt库
 # cmake .. -DPAHO_BUILD_STATIC=TRUE -DCMAKE_C_COMPILER=/opt/arm-2014.05/bin/arm-none-linux-gnueabi-gcc
