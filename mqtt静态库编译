@@ -25,7 +25,23 @@ libpaho-mqtt3as.a
 libpaho-mqtt3c.a
 libpaho-mqtt3a.a
 
+*****************************************************************************
+cmake修改静态库的名称CMAKE的ADD_LIBRARY()语法
+SET(LIBHELLO_SRC hello.c) 
 
+ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC}) 
+
+ADD_LIBRARY(hello_static STATIC ${LIBHELLO_SRC})
+
+SHARED,动态库
+STATIC,静态库
+MODULE,在使用dyld的系统有效,如果不支持dydl,则被当作SHARED对待
+
+注意:直接把hello_static改成hello是不可行的,静态库无法构建.解决方法:
+SET_TARGET_PROPERTIES(hello_static PROPERTIES OUTPUT_NAME
+"hello")
+
+*****************************************************************************
 生成编译环境编译mqttt库
 # cmake .. -DPAHO_BUILD_STATIC=TRUE -DCMAKE_C_COMPILER=/opt/arm-2014.05/bin/arm-none-linux-gnueabi-gcc
 # make
