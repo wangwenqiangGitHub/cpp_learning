@@ -14,6 +14,14 @@
 make 执行完成后，在build/src目录下即可找到编译生成的库文件，如下图所示
 
 
+动态库和静态库编译:
+    在源码文件夹下:src/
+    动态库:
+        g++ -fPIC -static -o libjson2pgm.a *.cpp -std=c++11
+     静态库:
+        g++ -c *.cpp -std=c++11
+        ar -cr libjson2pgm.a *.o
+
 静态库编译
 https://www.cnblogs.com/zjiaxing/p/5557629.html
 
