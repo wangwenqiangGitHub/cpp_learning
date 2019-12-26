@@ -6,3 +6,35 @@ map是一种关联容器,它按照特定顺序存储由键值Key和映射值Valu
 https://www.jianshu.com/p/4ddc02a22c9b
 
 关于关于关联容器举例子：键值 小明   映射值 ：电话号码 qq wechat 
+
+map数据的遍历:
+
+map反向迭代器的使用实战
+int main()
+{
+  map<int, string> mapStudent;
+  mapStudent[1] = "student_one";
+  mapStudent[2] = "student_two";
+  mapStudent[3] = "student_three";
+  map<int,string>::reverse_iterator iter;
+  for(iter = mapStudent.rbegin();iter != mapStudent.rend(); iter++)
+  {
+    cout<<iter->first<<" "<<iter->second<<endl;
+  }
+  return 0;
+}
+
+用数组方式遍历map
+int main()
+{
+  map<int,string> mapStudent;
+  mapStudent[1] = "student_one";
+  mapStudent[2] = "student_two";
+  mapStudent[3] = "student_three";
+  int iSize = mapStudent.size();
+  for(int i = 1; i <= iSize; i++)
+  {
+    cout <<i<<" "<<mapStudent[i]<<endl;
+  }
+  return 0;
+}
