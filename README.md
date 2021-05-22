@@ -6,3 +6,6 @@ start use lazygit
 P - push origion master
 p - pull
 
+x -menu
+
+x xxx
